@@ -17,18 +17,18 @@ public class RabbitMQConfig {
      */
     @Bean(EXCHANGE_TOPICS_INFORM)
     public Exchange EXCHANGE_TOPICS_INFORM() {
-        //durable(true)持久化，消息队列重启后交换机仍然存在
+        // durable(true)持久化，消息队列重启后交换机仍然存在
         return ExchangeBuilder.topicExchange(EXCHANGE_TOPICS_INFORM).durable(true).build();
     }
 
-    //声明队列
+    // 声明队列
     @Bean(QUEUE_INFORM_SMS)
     public Queue QUEUE_INFORM_SMS() {
         Queue queue = new Queue(QUEUE_INFORM_SMS);
         return queue;
     }
 
-    //声明队列
+    // 声明队列
     @Bean(QUEUE_INFORM_EMAIL)
     public Queue QUEUE_INFORM_EMAIL() {
         Queue queue = new Queue(QUEUE_INFORM_EMAIL);
