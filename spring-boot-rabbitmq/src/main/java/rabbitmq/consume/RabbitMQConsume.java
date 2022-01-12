@@ -1,10 +1,10 @@
 package rabbitmq.consume;
 
-import com.iyunfey.springboot.rabbitmq.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import rabbitmq.config.RabbitMQConfig;
 
 @Component
 public class RabbitMQConsume {

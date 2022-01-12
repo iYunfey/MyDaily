@@ -29,7 +29,7 @@ public class FanoutSender {
     @Bean
     public RabbitTemplate.ConfirmCallback confirmCallback() {
         return (correlationData, ack, cause) -> {
-            //我们可以通过correlationData原始数据 来对消息进行后续处理，但是这是有个要求在于发送必须使用CorrelationData类
+            // 我们可以通过correlationData原始数据 来对消息进行后续处理，但是这是有个要求在于发送必须使用CorrelationData类
             if (ack) {
                 log.info("消息发送成功!!!!!,消息data:{}，时间:{}", correlationData, System.currentTimeMillis());
             } else {
