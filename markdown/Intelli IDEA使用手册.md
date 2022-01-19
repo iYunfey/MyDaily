@@ -328,7 +328,7 @@ File——>Appearance & Behavior——>Menu and Toolbars——>Navigation Bar To
 
 # 四、插件
 
-Lombok，Key promoter，Json Parser，Free Mybatis plugin，Translation，CodeGlance
+Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeGlance
 
 # 五、启动项目
 
@@ -349,6 +349,10 @@ Lombok，Key promoter，Json Parser，Free Mybatis plugin，Translation，CodeGl
 用法二：配合maven，用于多环境切换 ，例：-Dprofile=test/dev
 
 # 六、调试项目
+
+## 原生Debug实现热部署
+
+项目以debug模式启动，然后修改代码，点击导航栏Build->Build Project
 
 ## 基本断点调试
 
