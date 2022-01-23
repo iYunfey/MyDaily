@@ -6,19 +6,19 @@
 
 ### 项目默认存储位置
 
-File->Settings->Appearance & Behavior->System Settings->project opening->default directory设置默认路径
+File——>Settings——>Appearance & Behavior——>System Settings——>project opening——>default directory设置默认路径
 
 ### 关闭自动更新
 
-File->Settings->Appearance & Behavior->System Settings->Updates下取消Automatically check updates for勾选
+File——>Settings——>Appearance & Behavior——>System Settings——>Updates下取消Automatically check updates for勾选
 
 ### 隐藏.idea文件夹和.iml文件
 
-IntelliJ IDEA项⽬目会⾃自动⽣生成⼀一个.idea⽂文件夹和.iml⽂文讲，看着实在是碍眼，所以对以上⽂文件进⾏行行隐藏处理理 在File->Settings->Editor->File Types下的”Ignore files and folders”⼀一栏添加 *.idea;*.iml;
+IntelliJ IDEA项⽬目会⾃自动⽣生成⼀一个.idea⽂文件夹和.iml⽂文讲，看着实在是碍眼，所以对以上⽂文件进⾏行行隐藏处理理 在File——>Settings——>Editor——>File Types下的”Ignore files and folders”⼀一栏添加 *.idea;*.iml;
 
 ### 文件编码设置UTF-8
 
-File->Settings->Editor->File Encodings
+File——>Settings——>Editor——>File Encodings
 
 Global Encoding:UTF-8
 
@@ -28,15 +28,15 @@ Default encoding for properties files:UTF-8 勾选上Transparent native-to-ascii
 
 ### 自动导包
 
-File->Settings->Editor- >General->Auto Import下进⾏配置，Insert imports on paste 选择All，其余四个选项全部勾选
+File——>Settings——>Editor- >General——>Auto Import下进⾏配置，Insert imports on paste 选择All，其余四个选项全部勾选
 
 ### 自动编译
 
-File->Settings->Build，Execution，Development—>complier—>build project automatically打勾
+File——>Settings——>Build，Execution，Development—>complier—>build project automatically打勾
 
 ### 设置主题
 
-File->Settings->Appearance&Behavior——>appearance——>theme——>选择主题
+File——>Settings——>Appearance&Behavior——>appearance——>theme——>选择主题
 
 ### 代码提示忽略大小写
 
@@ -44,21 +44,21 @@ editor——>general——>code completion——>取消match case
 
 ### 换行符使用 Unix 格式
 
-editor->code style->General->Line separator->Unix and macOS(\n)
+editor——>code style——>General——>Line separator——>Unix and macOS(\n)
 
 ### 自动换行
 
-File->Settings->Editor–>General–>Soft wraps—>soft wraps files后面输入框内添加;*.java
+File——>Settings——>Editor–>General–>Soft wraps—>soft wraps files后面输入框内添加;*.java
 
 把文件类型清空，然后输入*.*就能匹配全部文件格式自动换行
 
 ### 软换行
 
-代码行号，右键—>Soft wrap
+左侧代码行号，鼠标右键—>Soft wrap
 
 ### maven设置
 
-File->Settings->Build,Execution,Deployment->Build Tools->Maven下对Maven进⾏配置，
+File——>Settings——>Build,Execution,Deployment——>Build Tools——>Maven下对Maven进⾏配置，
 
 1. user settings file:指定Maven的settings.xml位置
 2. local repository: 指定Maven的本地仓库位置，是读取settings.xml⾃动配置的
@@ -82,35 +82,35 @@ File–>settings–>Editor–>color scheme——>Language defaults——>comment
 
 ### 单行显示多个Tabs
 
-File–>settings–>Editor–>General -->Editor Tabs–>去掉show tabs in single row的√
+File–>settings–>Editor–>General -——>Editor Tabs–>去掉show tabs in single row的√
 
 ### 改变Tabs位置到左侧
 
 点击任意一个Tab，右键configuration editor tabs——>tab placement属性由Top改为Left
 
-File–>settings–>Editor–>General -->Editor Tabs——>tab placement属性由Top改为Left
+File–>settings–>Editor–>General -——>Editor Tabs——>tab placement属性由Top改为Left
 
 ### Tabs排序
 
 点击任意一个Tab，右键configuration editor tabs——>Tab order——>sort tabs alphabetically
 
-File–>settings–>Editor–>General -->Editor Tabs——>Tab order——>sort tabs alphabetically
+File–>settings–>Editor–>General -——>Editor Tabs——>Tab order——>sort tabs alphabetically
 
 ### terminal
 
-File–>settings–>terminal->将cmd.exe换为git/bin/bash.exe
+File–>settings–>terminal——>将cmd.exe换为git/bin/bash.exe
 
 ### 将git的push命令显示在工具栏
 
-File–>settings–>Appearance&Behavior->Manu and Toolbars->navigation Bar Toolbar->NavBarVCS group->VCSNavToolbarActions->add action -> version control systems ->Git->Repository->找到push
+File–>settings–>Appearance&Behavior——>Manu and Toolbars——>navigation Bar Toolbar——>NavBarVCS group——>VCSNavToolbarActions——>add action ——> version control systems ——>Git——>Repository——>找到push
 
 ### 生成序列化ID
 
-File -> Settings -> Editor -> Inspections -> 搜索 Serialization issues ，找到 Serializable class without 'serialVersionUID' ->打上勾，Apply->OK，把鼠标放在在类名前会自动提示添加序列化id
+File ——> Settings ——> Editor ——> Inspections ——> 搜索 Serialization issues ，找到 Serializable class without 'serialVersionUID' ——>打上勾，Apply——>OK，把鼠标放在在类名前会自动提示添加序列化id
 
 ### 显示内存使用情况
 
-File-->settings-->apperance-->window options-->show memory indicator
+File-——>settings-——>apperance-——>window options-——>show memory indicator
 
 ### springboot项目显示run dashboard
 
@@ -165,7 +165,7 @@ File——>Appearance & Behavior——>Menu and Toolbars——>Navigation Bar To
 | 跳转到下一个 高亮错误 / 警告位置                             | F2                      |               |
 | 跳转到上一个高亮错误 / 警告位置                              | Shift + F2              |               |
 | 方法参数提示显示                                             | Ctrl + P                | Command   + P |
-| 光标所在的变量/类名/方法名等上面（也可以在提示补充的时候按），显示文档内容 | Ctrl + Q                | %             |
+| 光标所在的变量/类名/方法名等上面（也可以在提示补充的时候按），显示文档内容 | Ctrl + Q                |               |
 | 前往当前光标所在的方法的父类的方法/接口定义                  | Ctrl + U                |               |
 | 显示当前类的层次结构                                         | Ctrl + H                |               |
 | 调用层次                                                     | Ctrl + Alt + H          |               |
@@ -352,7 +352,7 @@ Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeG
 
 ## 原生Debug实现热部署
 
-项目以debug模式启动，然后修改代码，点击导航栏Build->Build Project
+项目以debug模式启动，然后修改代码，点击导航栏Build——>Build Project
 
 ## 基本断点调试
 
@@ -405,7 +405,7 @@ debugger界面，variables添加眼镜按钮，输入Java代码变量
 
 ## 修改方法注释模版
 
-File->Settings->Editor->Live Templates下添加⾃定义Template Group，并在⾃定义Template Group下添加⾃定义Template
+File——>Settings——>Editor——>Live Templates下添加⾃定义Template Group，并在⾃定义Template Group下添加⾃定义Template
 
 第一个
 
