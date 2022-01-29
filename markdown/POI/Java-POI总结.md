@@ -77,7 +77,7 @@ for (int i = 0; i < columnSize + 12; i++) {
 #### 单元格XSSFCell
 
 ```java
-String[] string = new String[]{"省市", "县区", "日目标", "当日业绩", "日达成率", "当月目标", "当月达成", "月达成率", "排名", "进度缺口", "剩余日均目标"};
+String[] string = new String[]{"表头一", "表头二", "表头三", "表头四", "表头五", "表头六", "表头七", "表头八", "表头九"};
 XSSFRow row3 = sheet1.getRow(2);
 for (int i = 0; i < string.length; i++) {
 	XSSFCell cell3 = row3.getCell(i);
