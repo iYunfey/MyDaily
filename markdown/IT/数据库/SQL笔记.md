@@ -1207,7 +1207,7 @@ public class JDBCUtils {
 | in()        | in内的数据数量没有限制，可对sql的长度有限制，默认4M | in内最多1000个数据，多于1000用in(1000) or in(1001) |
 | 时间格式    | yyyy-mm-dd hh24:mi:ss                               | %Y-%m-%d %H:%i:%s                                  |
 | 分页函数    | limit 起始位置，每页记录数                          | rownum                                             |
-|             |                                                     |                                                    |
+| 当前时间    | now()                                               | sysdate                                            |
 |             |                                                     |                                                    |
 |             |                                                     |                                                    |
 |             |                                                     |                                                    |
