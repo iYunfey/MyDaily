@@ -473,3 +473,13 @@ time	time()
 deployment会把下面的log区域遮住
 
 点击debug模式下控制台右上角Layout，取消勾选deployment
+
+# 十、综合bug
+
+## 10.1、文件类型显示异常
+
+文件类型显示异常，Java文件类型名称左侧都是J，比如接口不显示I而显示J
+
+产生原因：启用了Power Save Mode
+
+解决方法：File ->取消勾选Power Save Mode
