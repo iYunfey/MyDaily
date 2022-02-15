@@ -474,7 +474,7 @@ deployment会把下面的log区域遮住
 
 点击debug模式下控制台右上角Layout，取消勾选deployment
 
-# 十、综合bug
+# 十、其它
 
 ## 10.1、文件类型显示异常
 
