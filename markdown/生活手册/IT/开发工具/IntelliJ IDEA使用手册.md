@@ -409,7 +409,7 @@ File——>Settings——>Editor——>Live Templates下添加⾃定义Template 
 
 第一个
 
-```
+```java
 **
  * @description :
 $params$
@@ -433,7 +433,7 @@ time	time()
 
 第二个
 
-```
+```java
 **
  * @description: 
  *
@@ -458,13 +458,502 @@ time	time()
 
 # 八、Git
 
-## 切换git远程提交位置
+## 创建版本库
 
-2020.1版本，VCS-Git-Remotes，然后修改远程仓库URL
+初始化一个Git的版本库操作顺序：导航栏VCS——>Import into Version Control——>Create Git Repository，会弹出一个浏览文件的对
 
-## 快速查看提交记录
+话框，如下如所示，选择需要的目录即可。但是在实际开发中几乎不需要这样的操作。
 
-代码行数右键，点击Annotate，，可以看到提交时间以及提交人，直接双击可以看到当时提交的所有记录
+![](./pics/create_repository.png)
+
+## 远程仓库
+
+操作远程仓库前需要准备好下面三个要素
+
+```
+1. 安装Git并配置；
+2. 申请一个GitHub账号，Gitee和GitLab都是一个道理；
+3. 在IntelliJ IDEA上登录GitHub
+```
+
+### 添加远程仓库
+
+#### 方法一：
+
+```
+第一步：创建好你的项目后，操作顺序：导航栏VCS—>Import into Version Control—>Share Project on GitHub，如下图点击。
+```
+
+![](./pics/add_remote_1.png)
+
+```
+第二步：填写弹出分享项目到GitHub的窗口。
+```
+
+![](./pics/add_remote_2.png)
+
+Repository name就是仓库名。Remote就是远程仓库名。origin这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是
+
+远程库。Description就是项目描述。private是设置是否私有，私有库别人看不见。
+
+```
+第三步：单机Share，会自动进行一个add+commit的操作。就是将创建的代码添加到自动创建的本地仓库。
+```
+
+
+
+![](./pics/add_remote_3.png)
+
+这个对话框的意思就是以后会自动add所有新添加的文件到暂存区。打上不再提醒的对勾，点击Add就大功告成了。
+
+![](./pics/add_remote_4.png)
+
+创建完成之后，来到GitHub主页，就可以找到自己的库了。
+
+![](./pics/add_remote_5.png)
+
+这样做的好处就是——你可以在本地进行适当的开发，例如环境的配置和项目的初始化，之后再上传Git。而不是连接一个空的远程库，
+
+在搭建一个SpringBoot环境。
+
+但是同样有弊端，快捷方式只能分享到GitHub，其他的远程仓库暂不支持，像有的公司在自己的Git库上面开发，自然使用不了。
+
+#### 方法二：
+
+第一步：复制远程仓库URL
+
+![](./pics/add_remote_6.png)
+
+第二步：切换git远程提交位置，VCS—>Git—>Remotes
+
+![](./pics/add_remote_7.png)
+
+第三步：然后修改远程仓库URL
+
+![](./pics/add_remote_8.png)
+
+### 克隆（clone）项目
+
+第一步：
+先找到需要克隆的项目的链接，如图所示
+
+![](./pics/clone_project_1.png)
+
+第二步：导入
+File -> new -> Project from Version Control或者Get from Version Control
+
+![](./pics/clone_project_2.png)
+
+版本控制选择git，URL框输入git联接，编辑本地的存储位置，单击clone即可。
+
+![](./pics/clone_project_3.png)
+
+#### ssh和https区别
+
+```
+Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
+使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。
+```
+
+### 删除远程仓库
+
+删除远程仓库的操作必须在GitHub上面进行，方法如下：
+
+打开项目->Setting->Options->(拉到最下面找到)Delete this repository，弹出以下界面，重新输入一下项目名。
+
+![](./pics/delete_repository_1.png)
+
+还需要输入GitHub密码，就可以删除了。如果是想让本地和远程库失去连接，在remote界面，点这个小减号就行。
+
+![](./pics/delete_repository_2.png)
+
+## 文件状态更改
+
+### add+commit
+
+将一个文件创建并存放到Git的本地仓库的动作叫做提交（commit）。其分为三步，第一步自然是创建文件，第二步是将文件添加
+
+（add）到暂存区，然后再commit到本地仓库。
+
+第一步：创建文件，自动add
+
+首先我们新建一个文件readme.txt，由于之前的设置，idea会自动add所有的新建文件，所以在使用idea的过程中我们完全不需要add。
+
+已经add的文件在IntelliJ IDEA中显示绿色，未add的显示红色。
+
+如果需要手动add，在指定文件上右键Git—>+add即可，如下图操作所示。
+
+![](./pics/manual_add.png)
+
+第二步：commit
+
+快捷键Ctrl+K，或者点击编辑器右上角的绿色小对勾（也可能在左上角）。
+
+![](./pics/commit_1.png)
+
+弹出的对话框就是使用`git status`指令查看是否有内容被修改的可视化界面，如下（vcs.xml是idea的初始化文件，请无视）
+
+![](./pics/commit_2.png)
+
+双击你想看的文件，就可以知道有哪些修改了。这和`git diff`是一样的
+
+![](./pics/git_diff.png)
+
+无论是文件还是代码，红色代表没有进行add，绿色代表and但未commit，蓝色代表已经commit且有改动，灰色代表已经删除的但未
+
+commit。
+
+在红框中填写提交的信息wrote a readme file，然后我们点击图片上的Commit按钮，即可完成提交。这完全可以理解为Git指令`git `
+
+`commit -m "wrote a readme file"`
+
+![](./pics/commit_3.png)
+
+交完成后可以在项目名右键—>Git—>Show History查看日志。相当于`git log`
+
+### 快速查看提交记录
+
+方法一：代码行数右键，点击Annotate，，可以看到提交时间以及提交人，直接双击可以看到当时提交的所有记录
+
+方法二：项目名右键—>Git—>Show History
+
+方法三：左下角Git—>log
+
+### 版本回退
+
+#### Reset
+
+项目名右键—>Git—>Show History—>选中某次提交记录—>Reset Current Branch to here，如下图所示。
+
+![](./pics/git_reset_1.png)
+
+会弹出下面的提示框。
+
+git_reset_2.png
+
+![](./pics/git_reset_2.png)
+
+简单翻译一下：
+
+这会重设当前分支的head到选择的commit，并且更新工作树和暂存空间依照选择的模式
+
+软：文件不会更改，不同会被储存
+
+混合：文件不会更改，不同不会被储存
+
+硬：文件会被转换到被选择的提交的状态，提示：任何修改都会丢失
+
+保持：文件会被转换到被选择的提交的状态，但是本地的修改会被完整保存
+
+像上图提示一样，这种方法容易造成数据丢失，可以通过`git reflog`查看提交的id，再`reset`回去。
+
+在多人共同编码的时候，这样的回退不仅容易删除别人的代码，而非常容易操作混乱，造成了很多不必要的麻烦。所以在实际开发中，如
+
+果我们需要回退某个提交，我们会使用到`revert`。
+
+#### Revert
+
+项目名右键—>Git—>Show History—>选中某次提交记录—>Revert Commit，如下图所示
+
+![](./pics/git_revert_1.png)
+
+点击之后，会发现文件退回的同时，弹出一个commit的对话框，如下：
+
+![](./pics/git_revert_2.png)
+
+这就是 reset 和 revert 的区别。reset只不过是向后移动了Head指针，如下图：
+
+![](./pics/git_reset_revert_diff_1.png)
+
+而 revert 是回滚一个commit，再把这个回滚commit，如下图：
+
+![](./pics/git_reset_revert_diff_2.png)
+
+#### 总结
+
+reset 是删除到某个commit，期间所有commit都会被回滚；revert 是回滚某个commit，只回滚一个commit，并且生成一个新的commit；
+
+reset 时HEAD是向后移动了；revert 只不过是反向提交，它的HEAD是一直向前的；
+
+reset 会造成大量的冲突，所以适合在本地开发同时没有push到远端的时候使用；而revert造成的冲突非常有限，适合在push到远端的代
+
+码进行回滚。
+
+#### undo
+
+项目名右键—>Git—>Show History—>选中某次提交记录—>Undo Commit，如下图所示
+
+![](./pics/git_undo_1.png)
+
+如果你查看源代码，会发现undo就是`reset soft`。
+
+![](./pics/git_undo_2.png)
+
+但是idea对它进行了一定的限制和提示，它只能作用于最后一个commit，把这个commit从工作树删除，并且保留修改，同时建立一个
+
+New Changlist。效果如下：
+
+![](./pics/git_undo_3.png)
+
+![](./pics/git_undo_4.png)
+
+这个名为append GPL的New Changlist可以将改动的文件分门别类的放置在不同的文件夹中，等全部修改完毕后一起提交，一般在分模
+
+块开发时会使用。也就是在开发完一个完整的模块时，将这个模块上改动的代码设置到一个文件夹中，然后再一起提交。
+
+### 撤销修改
+
+想要撤销修改需要考虑以下四种情况：
+
+1、未add
+
+2、已add但未commit
+
+3、已commit但未push
+
+4、已经push
+
+#### 未add
+
+IntelliJ IDEA的自动add只能add新创建的内容，修改过后的内容会在commit的时候自动add
+
+#### 已add但未commit
+
+按照如下图所示的操作，即可达到`git reset HEAD <file>` 和`git checkout -- file`的操作。让未commit的修改全部消失。
+
+![](./pics/git_uncommit_1.png)
+
+由于idea的特殊机制，我们还可以有一种操作。
+
+按照下图指示，依次点击左边框的绿色条状长条，回滚箭头，即可撤销修改。这和git checkout -- file非常类似，但是实现原理不同，git 
+
+checkout -- file是使用暂存区的文件替换原有文件，而idea使用的是编译器自身的功能，类似ctrl+z。
+
+![](./pics/git_uncommit_2.png)
+
+消失的内容可以按照下图指示进行查询。
+
+![](./pics/git_uncommit_1.png)
+
+#### 已commit但未push
+
+可以使用上文介绍的reset和revert回滚。如果已经add但是未commit的内容非常多，也可以先commit，然后再使用reset和revert回滚
+
+#### 已经push
+
+同样可以使用reset和revert回滚，只不过需要commit+push的操作才能通过修改的方式来实现撤销。
+
+### 删除文件
+
+如果你使用Git指令，那么你需要像添加操作一样，先手动删除文件，然后使用指令`git rm test.txt`，将删除操作加载到暂存库，然后
+
+再commit到本地仓库。
+
+如果使用idea的图形化版本控制插件，直接删就行，下次commit会把删除的动作也提交上去。
+
+![](./pics/git_rm_1.png)
+
+## 分支管理
+
+### 创建
+
+master就是默认的主分支，创建分支非常简单，只需要按照下图提示点击，弹出对话框输入名字即可。
+
+![](./pics/git_create_branch_1.png)
+
+IDEA在创建完分支后会自动切换，也就是`git checkout -b dev`指令的效果。
+
+如何查找自己所在的分支？非常简单，在编辑器的右下角可以查看。等于`git branch`的效果
+
+![](./pics/git_create_branch_2.png)
+
+### 合并分支
+
+合并分支（merge）也非常简单，首先我们切换到主分支，操作如下：
+
+![](./pics/git_merge_1.png)
+
+然后我们选择要合并的分支点击merge into current。
+
+![](./pics/git_merge_2.png)
+
+合并完成后，还是在同一个菜单，点击delete即可删除分支。
+
+### 解决冲突
+
+创建一个新的分支，和master分支分别commit不同的内容。具体如下：
+
+```
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Creating a new branch is quick AND simple.
+```
+
+master分支
+
+```
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Creating a new branch is quick & simple.
+```
+
+可以看出两个版本有一个不同就是&和AND，如果merge，会发生什么？会弹出一个冲突的界面
+
+![](./pics/git_resolve_confict_1.png)
+
+在这个界面中有很多快捷按钮，但都不是我们介绍的重点，我们需要双击readme.txt来查看冲突并解决它，双击结果如下：
+
+![](./pics/git_resolve_confict_2.png)
+
+我们可以清晰地看出界面分为左中右三个板块，分别是当前分支master、合并后的结果和需要合并的分支feature。同时上方有很多便捷
+
+操作的按钮，具体功能大家可以尝试一下，非常简单。我们合并的主要操作就是三个板块相连的间隔中的X和>>来实现，X就是放弃修
+
+改，>>就是选择修改。同时三个板块都是可以编辑的文件，也就是说在合并过程中你都是可以增加代码和注释的。在这里我们需要放弃
+
+&，然后保留AND，合成完成的结果如下：
+
+![](./pics/git_resolve_confict_3.png)
+
+合并完成再看Git log，会发现一个分支创建又合并的过程。
+
+![](./pics/git_resolve_confict_4.png)
+
+### Bug 分支（stash+cherry-pick）
+
+有这样一个场景，当你接到一个修复一个代号101的bug的任务时，很自然地，你想创建一个分支issue-101来修复它，但是，等等，当前
+
+正在dev上进行的工作还没有提交。并不是你不想提交，而是工作只进行到一半，还没法提交，预计完成还需1天时间。但是，必须在两个
+
+小时内修复该bug，怎么办？
+
+解决方法，就是使用stash，很简单的道理，就是隐藏未提交的代码，并保持。
+
+![](./pics/git_stash_1.png)
+
+如图所示，可以看出有两个修改，一个是添加了新的文件file.txt，第二个是加了一行代码。而我们的bug就是comment和author的内容
+
+写错了。按照图示进行点击，即可实现`git stash`指令的效果。
+
+![](./pics/git_stash_2.png)
+
+少顷，修改的代码就会消失，如下图。这时我们就可以切换分支修改bug了，注意当前分支如果有未提交的代码是不能切换分支的会导致
+
+代码丢失。
+
+![](./pics/git_stash_3.png)
+
+此时新建立了一个issue-101分支然后修改过后再合并到master，我们就直接在master上面修改即可。
+
+发生了新问题，在master分支上修复了bug后，dev分支是早期从master分支分出来的，所以，这个bug其实在当前dev分支上也存在。
+
+那怎么在dev分支上修复同样的bug？重复操作一次，提交不就行了？
+
+但有更简单的方法，就是`cherry-pick`命令。如图所示即可实现对单个commit的同步操作。
+
+![](./pics/git_cherry_1.png)
+
+![](./pics/git_cherry_2.png)
+
+我们再点击Stash Changes…同一菜单的unStash Changes…来查看stash 列表，效果等同于`git stash list`。
+
+![](./pics/git_cherry_3.png)
+
+View：查看隐藏的代码
+
+Drop：删除选中隐藏
+
+Clear：清空所有隐藏
+
+Apply Stash：将隐藏代码恢复
+
+Pop stash：Apply的同时会Drop隐藏
+
+点击Apply Stash就能让隐藏的代码恢复。注意Stash过后的分支如果你又有新的改动一定要commit，如果不commit，当你使用Apply 
+
+Stash重新获取代码的时候就会失败，也有可能因为操作不当导致代码消失。如果有了新的commit，在apply stash时就会当成融合冲突
+
+处理。就比如我们现在，因为我们融合了master上面修改的代码，所以现在的代码和stash时的代码不一样了，就需要处理一下。方法就
+
+和之前的merge一样。
+
+然后就发现代码又回来了，如果这里file.txt没有出现，请刷新一下文件。
+
+![](./pics/git_cherry_4.png)
+
+### 多人协作（pull+push）
+
+右上角工作区—>左下指向蓝色箭头，效果相当于git pull
+
+![](./pics/git_pull_1.png)
+
+推送和拉取在idea中形象的被两个简单所表示，蓝色的向下的时拉取，绿色的向上的时推送。idea中拉取是update project。git fetch是
+
+抓取远程仓库修改的内容，抓取到后不会改变本地仓库，只有git merge的时候才会改变。而git pull就是fetch+merge的组合，和update 
+
+project效果一样。
+
+![](./pics/git_pull_2.png)
+
+推送就是`git push`，一模一样。这里push还有一个小技巧，就是在commit的时候可以直接使用push，省去了多一步的操作。
+
+![](./pics/git_push_1.png)
+
+如何拉取远程仓库分支，如下：
+
+![](./pics/git_pull_3.png)
+
+效果就是创建一个本地分支，再和远程仓库进行连接，等同于checkout -b dev origin/dev。
+
+多人操作的情况下，你的每次改动都需要考虑到别人的代码是否也发生了改动，所有在每次push的时候idea都会主动申请一次pull操作，
+
+如果有冲突，先处理冲突在push，没有就直接push。
+
+### rebase
+
+在实际开发中很少使用到变基，因为有一定的危险性，所有使用者尤其是新手一定要慎用。
+
+情况一：当合并别人的提交时
+
+当多人提交时，我们必须要先融合别人的代码，所以必定会形成下图这种分叉然后再回归的情况。
+
+![](./pics/git_rebase_1.png)
+
+而我们使用变基（rebase）就可以避免这一情况。在update project的时候选择下面的选项。
+
+![](./pics/git_rebase_2.png)
+
+效果如下图
+
+![](./pics/git_rebase_3.png)
+
+情况二：当合并不同分支时
+
+操作如下：
+
+![](./pics/git_rebase_4.png)
+
+但是一定要注意，这个和merge的不同，merge是将选择的分支合并到当前分支，而rebase是将当前分支变基到选择的分支。也就是说为
+
+了达到合并feature1代码的效果，如果我们使用merge，我们应该切换到dev，然后选择feature1进行merge操作。如果我们使用
+
+rebase，我们应该切换到feature1，然后选择dev进行rebase操作。
+
+## 标签管理
+
+项目名称右键Git—>Show History
+
+![](./pics/git_tag_1.png)
+
+Push Tag的操作在push commit的操作窗口的右下角。
+
+![](./pics/git_tag_2.png)
+
+删除已经提交的Tag需要再删除远程仓库的Tag，单机提示框的delete on Remote即可
+
+![](./pics/git_tag_3.png)
+
+
 
 # 九、Tomcat
 
@@ -483,3 +972,9 @@ deployment会把下面的log区域遮住
 产生原因：启用了Power Save Mode
 
 解决方法：File ->取消勾选Power Save Mode
+
+## 10.2、开启正则辅助
+
+```
+str.matches("")在双引号之间Alt/Option + Enter，选择Check RegexExp，在RegExp填写\d，在双引号之间会自动转译填写为\\d
+```
