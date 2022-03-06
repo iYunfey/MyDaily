@@ -1,24 +1,24 @@
-# 一、下载安装破解
+# 一、下载安装
 
-下载地址：https://www.jetbrains.com/zh-cn/idea/
+官网地址：https://www.jetbrains.com/zh-cn/idea/
 
 # 二、配置参数
 
 ### 项目默认存储位置
 
-File——>Settings——>Appearance & Behavior——>System Settings——>project opening——>default directory设置默认路径
+File—>Settings—>Appearance & Behavior—>System Settings—>project opening—>default directory设置默认路径
 
 ### 关闭自动更新
 
-File——>Settings——>Appearance & Behavior——>System Settings——>Updates下取消Automatically check updates for勾选
+File—>Settings—>Appearance & Behavior—>System Settings—>Updates下取消Automatically check updates for勾选
 
 ### 隐藏.idea文件夹和.iml文件
 
-IntelliJ IDEA项⽬目会⾃自动⽣生成⼀一个.idea⽂文件夹和.iml⽂文讲，看着实在是碍眼，所以对以上⽂文件进⾏行行隐藏处理理 在File——>Settings——>Editor——>File Types下的”Ignore files and folders”⼀一栏添加 *.idea;*.iml;
+IntelliJ IDEA项⽬目会⾃自动⽣生成⼀一个.idea⽂文件夹和.iml⽂文讲，看着实在是碍眼，所以对以上⽂文件进⾏行行隐藏处理理 在File—>Settings—>Editor—>File Types下的”Ignore files and folders”⼀一栏添加 *.idea;*.iml;
 
 ### 文件编码设置UTF-8
 
-File——>Settings——>Editor——>File Encodings
+File—>Settings—>Editor—>File Encodings
 
 Global Encoding:UTF-8
 
@@ -28,27 +28,27 @@ Default encoding for properties files:UTF-8 勾选上Transparent native-to-ascii
 
 ### 自动导包
 
-File——>Settings——>Editor- >General——>Auto Import下进⾏配置，Insert imports on paste 选择All，其余四个选项全部勾选
+File—>Settings—>Editor—>General—>Auto Import下进⾏配置，Insert imports on paste 选择All，其余四个选项全部勾选
 
 ### 自动编译
 
-File——>Settings——>Build，Execution，Development—>complier—>build project automatically打勾
+File—>Settings—>Build，Execution，Development—>complier—>build project automatically打勾
 
 ### 设置主题
 
-File——>Settings——>Appearance&Behavior——>appearance——>theme——>选择主题
+File—>Settings—>Appearance&Behavior—>appearance—>theme—>选择主题
 
 ### 代码提示忽略大小写
 
-editor——>general——>code completion——>取消match case
+editor—>general—>code completion—>取消match case
 
 ### 换行符使用 Unix 格式
 
-editor——>code style——>General——>Line separator——>Unix and macOS(\n)
+editor—>code style—>General—>Line separator—>Unix and macOS(\n)
 
 ### 自动换行
 
-File——>Settings——>Editor–>General–>Soft wraps—>soft wraps files后面输入框内添加;*.java
+File—>Settings—>Editor–>General–>Soft wraps—>soft wraps files后面输入框内添加;*.java
 
 把文件类型清空，然后输入*.*就能匹配全部文件格式自动换行
 
@@ -58,7 +58,7 @@ File——>Settings——>Editor–>General–>Soft wraps—>soft wraps files后
 
 ### maven设置
 
-File——>Settings——>Build,Execution,Deployment——>Build Tools——>Maven下对Maven进⾏配置，
+File—>Settings—>Build,Execution,Deployment—>Build Tools—>Maven下对Maven进⾏配置，
 
 1. user settings file:指定Maven的settings.xml位置
 2. local repository: 指定Maven的本地仓库位置，是读取settings.xml⾃动配置的
@@ -70,47 +70,47 @@ File–>settings–>Editor–>General–>勾选Show quick documentation...
 
 ### 快捷键代码提示
 
-keymap——>Main menu——>code——>completion——>Basic——>先Remove再Add，alt+/
+keymap—>Main menu—>code—>completion—>Basic—>先Remove再Add，alt+/
 
 ### 快捷键关闭单个Tab
 
-keymap——>Main menu——>Window——>Editor tabs——>close——>先Remove再Add，control+w
+keymap—>Main menu—>Window—>Editor tabs—>close—>先Remove再Add，control+w
 
 ### 注释斜体改为正体
 
-File–>settings–>Editor–>color scheme——>Language defaults——>comments——>Doc comment——>text以及line comment取消勾选italic
+File–>settings–>Editor–>color scheme—>Language defaults—>comments—>Doc comment—>text以及line comment取消勾选italic
 
 ### 单行显示多个Tabs
 
-File–>settings–>Editor–>General -——>Editor Tabs–>去掉show tabs in single row的√
+File–>settings–>Editor–>General —>Editor Tabs–>去掉show tabs in single row的√
 
 ### 改变Tabs位置到左侧
 
-点击任意一个Tab，右键configuration editor tabs——>tab placement属性由Top改为Left
+点击任意一个Tab，右键configuration editor tabs—>tab placement属性由Top改为Left
 
-File–>settings–>Editor–>General -——>Editor Tabs——>tab placement属性由Top改为Left
+File–>settings–>Editor–>General —>Editor Tabs—>tab placement属性由Top改为Left
 
 ### Tabs排序
 
-点击任意一个Tab，右键configuration editor tabs——>Tab order——>sort tabs alphabetically
+点击任意一个Tab，右键configuration editor tabs—>Tab order—>sort tabs alphabetically
 
-File–>settings–>Editor–>General -——>Editor Tabs——>Tab order——>sort tabs alphabetically
+File–>settings–>Editor–>General —>Editor Tabs—>Tab order—>sort tabs alphabetically
 
 ### terminal
 
-File–>settings–>terminal——>将cmd.exe换为git/bin/bash.exe
+File–>settings–>terminal—>将cmd.exe换为git/bin/bash.exe
 
 ### 将git的push命令显示在工具栏
 
-File–>settings–>Appearance&Behavior——>Manu and Toolbars——>navigation Bar Toolbar——>NavBarVCS group——>VCSNavToolbarActions——>add action ——> version control systems ——>Git——>Repository——>找到push
+File–>settings–>Appearance&Behavior—>Manu and Toolbars—>navigation Bar Toolbar—>NavBarVCS group—>VCSNavToolbarActions—>add action —> version control systems —>Git—>Repository—>找到push
 
 ### 生成序列化ID
 
-File ——> Settings ——> Editor ——> Inspections ——> 搜索 Serialization issues ，找到 Serializable class without 'serialVersionUID' ——>打上勾，Apply——>OK，把鼠标放在在类名前会自动提示添加序列化id
+File —> Settings —> Editor —> Inspections —> 搜索 Serialization issues ，找到 Serializable class without 'serialVersionUID' —>打上勾，Apply—>OK，把鼠标放在在类名前会自动提示添加序列化id
 
 ### 显示内存使用情况
 
-File-——>settings-——>apperance-——>window options-——>show memory indicator
+File—>settings—>apperance—>window options—>show memory indicator
 
 ### springboot项目显示run dashboard
 
@@ -145,7 +145,7 @@ File-——>settings-——>apperance-——>window options-——>show memory i
 
 ### 前进后退添加到工具栏
 
-File——>Appearance & Behavior——>Menu and Toolbars——>Navigation Bar Toolbar——>Toolbar Run Actions——>Add Action——>Main menu——>Navigate——>ctrl选中Back和Forward——>点击ok
+File—>Appearance & Behavior—>Menu and Toolbars—>Navigation Bar Toolbar—>Toolbar Run Actions—>Add Action—>Main menu—>Navigate—>ctrl选中Back和Forward—>点击ok
 
 
 
@@ -342,7 +342,7 @@ Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeG
 
 ## 启动参数
 
-菜单栏——>edit configuration 
+菜单栏—>edit configuration 
 
 用法一：启动参数-D可以覆盖application.properties的配置，例：-Dserver.port.8081
 
@@ -352,7 +352,7 @@ Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeG
 
 ## 原生Debug实现热部署
 
-项目以debug模式启动，然后修改代码，点击导航栏Build——>Build Project
+项目以debug模式启动，然后修改代码，点击导航栏Build—>Build Project
 
 ## 基本断点调试
 
@@ -405,7 +405,7 @@ debugger界面，variables添加眼镜按钮，输入Java代码变量
 
 ## 修改方法注释模版
 
-File——>Settings——>Editor——>Live Templates下添加⾃定义Template Group，并在⾃定义Template Group下添加⾃定义Template
+File—>Settings—>Editor—>Live Templates下添加⾃定义Template Group，并在⾃定义Template Group下添加⾃定义Template
 
 第一个
 
@@ -460,7 +460,7 @@ time	time()
 
 ## 创建版本库
 
-初始化一个Git的版本库操作顺序：导航栏VCS——>Import into Version Control——>Create Git Repository，会弹出一个浏览文件的对
+初始化一个Git的版本库操作顺序：导航栏VCS—>Import into Version Control—>Create Git Repository，会弹出一个浏览文件的对
 
 话框，如下如所示，选择需要的目录即可。但是在实际开发中几乎不需要这样的操作。
 
@@ -976,5 +976,6 @@ deployment会把下面的log区域遮住
 ## 10.2、开启正则辅助
 
 ```
-str.matches("")在双引号之间Alt/Option + Enter，选择Check RegexExp，在RegExp填写\d，在双引号之间会自动转译填写为\\d
+1、str.matches("")在双引号之间Alt/Option + Enter
+2、选择Check RegexExp，在RegExp填写\d，在双引号之间会自动转译填写为\\d
 ```
