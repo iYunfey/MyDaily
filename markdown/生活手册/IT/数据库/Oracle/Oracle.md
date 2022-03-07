@@ -38,10 +38,31 @@ INSTR('CORPORATE FLOOR','OR', 3, 2)中
 使用“||”进行字符串拼
 SELECT '工号为'||FNumber||'的员工姓名为'||FName FROM T_Employee 
 WHERE FName IS NOT NULL 
+
 CONCAT()函数只支持两个参数，如果要进行多个字符串的拼接的话，可以使用多个CONCAT()函数嵌套使用
 SELECT CONCAT(CONCAT(CONCAT('工号为',FNumber),'的员工姓名为'),FName) 
 FROM T_Employee 
 WHERE FName IS NOT NULL
+
+
+WMSYS.WM_CONCAT()返回来自同一个分组的指定字段的非NULL值的连接起来字符串， 依赖WMSYS用户，不同oracle环境时可能用不了，返回类型为CLOB
+wmsys.wm_concat(to_char(....))..应该加上to_char()可以防止乱码
+WMSYS.WM_CONCAT(distinct (字段名))可以去重
+
+示例：
+1、以cid分组，把同组的sage字段值打印在一行，逗号分隔(默认)
+SELECT cid, WMSYS.WM_CONCAT(sage) 
+FROM student
+GROUP BY cid;
+
+2、以cid分组，把同组的sage字段的值打印在一行，竖线分隔
+SELECT cid, replace(WMSYS.WM_CONCAT(sage), ',', '|') 
+FROM student
+GROUP BY cid;
+
+3、以cid分组，把同组的sage字段值去重且排序后打印在一行
+select cid, WMSYS.WM_CONCAT(distinct sage) 
+from student group by cid;
 ```
 
 #### 字符串截取
@@ -923,8 +944,6 @@ select
 	corr(stu_age,line) over(partition by stu_major order by stu_age)
 from student; --计算分组递加的相关系数
 ```
-
-
 
 ## 1.4、创建序列、获取自增主键
 
