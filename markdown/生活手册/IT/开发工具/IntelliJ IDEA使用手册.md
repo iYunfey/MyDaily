@@ -4,6 +4,10 @@
 
 # 二、配置参数
 
+### Debugger进入源码
+
+File—>Settings—>Build，Execution，Development—>Debugger—>Stepping—>取消勾选Don't step into classes 
+
 ### 项目默认存储位置
 
 File—>Settings—>Appearance & Behavior—>System Settings—>project opening—>default directory设置默认路径
@@ -611,6 +615,10 @@ commit。
 
 交完成后可以在项目名右键—>Git—>Show History查看日志。相当于`git log`
 
+### 快速commit(Tab可以快速切换选项)
+
+Ctrl+K打开提交面板，填写message，Ctrl + Enter提交
+
 ### 快速查看提交记录
 
 方法一：代码行数右键，点击Annotate，，可以看到提交时间以及提交人，直接双击可以看到当时提交的所有记录
@@ -881,9 +889,9 @@ Stash重新获取代码的时候就会失败，也有可能因为操作不当导
 
 ![](./pics/git_cherry_4.png)
 
-### 多人协作（pull+push）
+### 拉取pull
 
-右上角工作区—>左下指向蓝色箭头，效果相当于git pull
+Ctrl + T，右上角工作区—>左下指向蓝色箭头，效果相当于git pull
 
 ![](./pics/git_pull_1.png)
 
@@ -895,7 +903,9 @@ project效果一样。
 
 ![](./pics/git_pull_2.png)
 
-推送就是`git push`，一模一样。这里push还有一个小技巧，就是在commit的时候可以直接使用push，省去了多一步的操作。
+### 推送push(Tab可以快速切换选项)
+
+推送就是`git push`，快捷键Ctrl + Shift + K打开需要push的commit记录，Ctrl + Enter推送。这里push还有一个小技巧，就是在commit的时候可以直接使用push，省去了多一步的操作。
 
 ![](./pics/git_push_1.png)
 
