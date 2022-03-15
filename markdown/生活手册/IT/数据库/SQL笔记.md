@@ -87,7 +87,7 @@ CREATE TABLE tab_favorite (
 	1. 安装
 		* 参见《MySQL基础.pdf》
 	2. 卸载
-		1. 去mysql的安装目录找到my.ini文件
+		1. 去MySQL的安装目录找到my.ini文件
 			* 复制 datadir="C:/ProgramData/MySQL/MySQL Server 5.5/Data/"
 		2. 卸载MySQL
 		3. 删除C:/ProgramData目录下的MySQL文件夹。
@@ -97,12 +97,12 @@ CREATE TABLE tab_favorite (
 			1. 手动。
 			2. cmd--> services.msc 打开服务的窗口
 			3. 使用管理员打开cmd
-				* net start mysql : 启动mysql的服务
-				* net stop mysql:关闭mysql服务
+				* net start MySQL : 启动MySQL的服务
+				* net stop MySQL:关闭MySQL服务
 		* MySQL登录
-			1. mysql -uroot -p密码
-			2. mysql -hip -uroot -p连接目标的密码
-			3. mysql --host=ip --user=root --password=连接目标的密码
+			1. MySQL -uroot -p密码
+			2. MySQL -hip -uroot -p连接目标的密码
+			3. MySQL --host=ip --user=root --password=连接目标的密码
 		* MySQL退出
 			1. exit
 			2. quit
@@ -129,7 +129,7 @@ CREATE TABLE tab_favorite (
 		2. 可使用空格和缩进来增强语句的可读性。
 		3. MySQL 数据库的 SQL 语句不区分大小写，关键字建议使用大写。
 		4. 3 种注释
-			* 单行注释: -- 注释内容 或 # 注释内容(mysql 特有) 
+			* 单行注释: -- 注释内容 或 # 注释内容(MySQL 特有) 
 			* 多行注释: /* 注释 */
 		
 	3. SQL分类
@@ -601,20 +601,20 @@ CREATE TABLE tab_favorite (
 			SET PASSWORD FOR '用户名'@'主机名' = PASSWORD('新密码');
 			SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
 
-			* mysql中忘记了root用户的密码？
-				1. cmd -- > net stop mysql 停止mysql服务
+			* MySQL中忘记了root用户的密码？
+				1. cmd -- > net stop MySQL 停止MySQL服务
 					* 需要管理员运行该cmd
 
-				2. 使用无验证方式启动mysql服务： mysqld --skip-grant-tables
-				3. 打开新的cmd窗口,直接输入mysql命令，敲回车。就可以登录成功
-				4. use mysql;
+				2. 使用无验证方式启动MySQL服务： mysqld --skip-grant-tables
+				3. 打开新的cmd窗口,直接输入MySQL命令，敲回车。就可以登录成功
+				4. use MySQL;
 				5. update user set password = password('你的新密码') where user = 'root';
 				6. 关闭两个窗口
 				7. 打开任务管理器，手动结束mysqld.exe 的进程
-				8. 启动mysql服务
+				8. 启动MySQL服务
 				9. 使用新密码登录。
 		4. 查询用户：
-			-- 1. 切换到mysql数据库
+			-- 1. 切换到MySQL数据库
 			USE myql;
 			-- 2. 查询user表
 			SELECT * FROM USER;
@@ -749,7 +749,7 @@ CREATE TABLE tab_favorite (
 			phone_number VARCHAR(20) UNIQUE -- 添加了唯一约束
 		
 		);
-		* 注意mysql中，唯一约束限定的列的值可以有多个null(实测至多1个)
+		* 注意MySQL中，唯一约束限定的列的值可以有多个null(实测至多1个)
 
 2. 删除唯一约束
 		ALTER TABLE stu DROP INDEX phone_number;
@@ -857,8 +857,8 @@ Statement/PreparedStatement__>输出流
 
 步骤：
 
-​	1.导入驱动jar包 mysql-connector-java-5.1.37-bin.jar
-​		1.复制mysql-connector-java-5.1.37-bin.jar到项目的libs目录下
+​	1.导入驱动jar包 MySQL-connector-java-5.1.37-bin.jar
+​		1.复制MySQL-connector-java-5.1.37-bin.jar到项目的libs目录下
 ​		2.右键-->Add As Library
 
 ​	2.注册驱动
@@ -884,8 +884,8 @@ Statement/PreparedStatement__>输出流
 告诉程序该使用哪一个数据库驱动jar
 
 ```
-写代码使用：  Class.forName("com.mysql.jdbc.Driver");
-				通过查看源码发现：在com.mysql.jdbc.Driver类中存在静态代码块
+写代码使用：  Class.forName("com.MySQL.jdbc.Driver");
+				通过查看源码发现：在com.MySQL.jdbc.Driver类中存在静态代码块
 				 static {
 				        try {
 				            java.sql.DriverManager.registerDriver(new Driver());
@@ -894,7 +894,7 @@ Statement/PreparedStatement__>输出流
 				        }
 					}
 
-				注意：mysql5之后的驱动jar包可以省略注册驱动的步骤。
+				注意：MySQL5之后的驱动jar包可以省略注册驱动的步骤。
 ```
 
 #### 功能2—>获取数据库连接
@@ -906,7 +906,7 @@ Statement/PreparedStatement__>输出流
 		1.url：指定连接的路径
 			* 语法：jdbc:mysql://ip地址(域名):端口号/数据库名称
 			* 例子：jdbc:mysql://localhost:3306/db3
-			* 细节：如果连接的是本机mysql服务器，并且mysql服务默认端口是3306，则url可以简写为：jdbc:mysql:///数据库名称
+			* 细节：如果连接的是本机MySQL服务器，并且MySQL服务默认端口是3306，则url可以简写为：jdbc:mysql:///数据库名称
 		2.user：用户名
 		3.password：密码 
 ```
@@ -992,7 +992,7 @@ getXxx(参数):获取数据
 #### 4.使用步骤
 
 ```
-1. 导入驱动jar包 mysql-connector-java-5.1.37-bin.jar
+1. 导入驱动jar包 MySQL-connector-java-5.1.37-bin.jar
 2. 注册驱动
 3. 获取数据库连接对象 Connection
 4. 定义sql
@@ -1198,6 +1198,243 @@ public class JDBCUtils {
 ```
 
 # 九、MySQL与Oracle区别
+
+## 宏观角度分析
+
+1、Oracle是大型的数据库而MySQL是中小型数据库；MySQL是开源的，Oracle是收费的，且价格昂贵。
+
+2、Oracle支持大并发，大访问量，是OLTP的最好的工具。
+
+3、安装占用的内存也是有差别，MySQL安装完成之后占用的内存远远小于Oracle所占用的内存，并且Oracle越用所占内存也会变多。
+
+## 微观角度分析
+
+### 1、对于事务的支持
+
+MySQL对于事务默认是不支持的，只是有某些存储引擎中如：innodb可以支持；而Oracle对于事物是完全支持的。
+
+### 2、并发性
+
+什么是并发性？并发性是OLTP(**On-Line Transaction Processing联机事务处理过程**)数据库最重要的特性，并发性涉及到资源的获取、共享与锁定。
+
+MySQL以表锁为主，对资源锁定的力度很大，如果一个session对一个表加锁时间过长，会让其他session无法更新此表的数据。
+
+Oracle使用行级锁，对资源锁定的力度要小很多，只是锁定sql需要的资源，并且加锁是在数据库中的数据行上，不依赖于索引。所以Oracle对并发性的支持要好很多。
+
+### 3、数据的持久性
+
+Oracle保证提交的事务均可以恢复，因为Oracle把提交的sql操作线写入了在线联机日志文件中，保存到磁盘上，如果出现数据库或者主机异常重启，重启Oracle可以靠联机在线日志恢复客户提交的数据。
+
+MySQL默认提交sql语句，但是如果更新过程中出现db或者主机重启的问题，也可能会丢失数据。
+
+### 4、事务隔离级别
+
+> **MySQL：**
+
+MySQL默认的事务处理级别是'REPEATABLE-READ',也就是可重复读
+
+1.查看当前会话隔离级别
+
+```sql
+select @@tx_isolation;
+```
+
+2.查看系统当前隔离级别
+
+```sql
+select @@global.tx_isolation;
+```
+
+3.设置当前会话隔离级别
+
+```sql
+set session transaction isolatin level repeatable read;
+```
+
+4.设置系统当前隔离级别
+
+```sql
+set global transaction isolation level repeatable read;
+```
+
+> **Oracle：**
+
+Oracle数据库支持READ COMMITTED 和 SERIALIZABLE这两种事务隔离级别。
+
+默认系统事务隔离级别是READ COMMITTED,也就是读已提交
+
+```sql
+--首先创建一个事务
+declare
+     trans_id Varchar2(100);
+  begin
+     trans_id := dbms_transaction.local_transaction_id( TRUE );
+  end; 
+--查看事务隔离级别
+SELECT s.sid, s.serial#,
+　　CASE BITAND(t.flag, POWER(2, 28))
+　　　　WHEN 0 THEN 'READ COMMITTED'
+　　　　ELSE 'SERIALIZABLE'
+　　END AS isolation_level
+FROM v$transaction t
+JOIN v$session s ON t.addr = s.taddr AND s.sid = sys_context('USERENV', 'SID');
+```
+
+### 5、提交方式
+
+Oracle默认不自动提交，需要手动提交。MySQL默认自动提交。
+
+### 6、逻辑备份
+
+MySQL逻辑备份是要锁定数据，才能保证备份的数据是一致的，影响业务正常的DML(数据操纵语言Data Manipulation Language)使用；Oracle逻辑备份时不锁定数据，且备份的数据是一致的。
+
+### 7、sql语句的灵活性
+
+MySQL对sql语句有很多非常实用而方便的扩展，比如limit功能(分页)，insert可以一次插入多行数据；Oracle在这方面感觉更加稳重传统一些，Oracle的分页是通过伪列和子查询完成的，插入数据只能一行行的插入数据。
+
+### 8、数据复制
+
+MySQL：复制服务器配置简单，但主库出问题时，丛库有可能丢失一定的数据。且需要手工切换丛库到主库。
+
+Oracle：既有推或拉式的传统数据复制，也有dataguard的双机或多机容灾机制，主库出现问题是，可以自动切换备库到主库，但配置管理较复杂。
+
+### 9、分区表和分区索引
+
+MySQL的分区表还不太成熟稳定；Oracle的分区表和分区索引功能很成熟，可以提高用户访问db的体验。
+
+### 10、售后与费用
+
+Oracle是收费的，出问题找客服；MySQL是免费的的，开源的，出问题自己解决。
+
+### 11、权限与安全
+
+Oracle的权限与安全概念比较传统，中规中矩；MySQL的用户与主机有关，感觉没有什么意义，另外更容易被仿冒主机及ip有可乘之机。
+
+### 12、性能诊断方面
+
+Oracle有各种成熟的性能诊断调优工具，能实现很多自动分析、诊断功能。比如awr、addm、sqltrace、tkproof等 ；MySQL的诊断调优方法较少，主要有慢查询日志。
+
+## 其他
+
+1. Oracle是大型数据库而MySQL是中小型数据库，Oracle市场占有率达40%，MySQL只有20%左右，同时MySQL是开源的而Oracle价格非常高。
+2. Oracle支持大并发，大访问量，是OLTP(On-Line Transaction Processing联机事务处理系统)最好的工具。
+
+3. 安装所用的空间差别也是很大的，MySQL安装完后才152M而Oracle有3G左右，且使用的时候Oracle占用特别大的内存空间和其他机器性能。
+
+> **Oracle与MySQL在其他操作上的一些区别：**
+
+①主键 MySQL一般使用自动增长类型，在创建表时只要指定表的主键为auto increment,插入记录时，不需要再指定该记录的主键值，MySQL将自动增长；Oracle没有自动增长类型，主键一般使用的序列，插入记录时将序列号的下一个值付给该字段即可；只是ORM框架是只要是native主键生成策略即可。
+
+②单引号的处理 MySQL里可以用双引号包起字符串，Oracle里只可以用单引号包起字符串。在插入和修改字符串前必须做单引号的替换：把所有出现的一个单引号替换成两个单引号。
+
+③翻页的SQL语句的处理 MySQL处理翻页的SQL语句比较简单，用LIMIT 开始位置, 记录个数；Oracle处理翻页的SQL语句就比较繁琐了。每个结果集只有一个ROWNUM字段标明它的位置, 并且只能用ROWNUM<100, 不能用ROWNUM>80。
+
+④ 长字符串的处理，长字符串的处理Oracle也有它特殊的地方。INSERT和UPDATE时最大可操作的字符串长度小于等于4000个单字节, 如果要插入更长的字符串, 请考虑字段用CLOB类型，方法借用Oracle里自带的DBMS_LOB程序包。插入修改记录前一定要做进行非空和长度判断，不能为空的字段值和超出长度字段值都应该提出警告,返回上次操作。
+
+⑤空字符的处理 MySQL的非空字段也有空的内容，Oracle里定义了非空字段就不容许有空的内容。按MySQL的NOT NULL来定义Oracle表结构, 导数据的时候会产生错误。因此导数据时要对空字符进行判断，如果为NULL或空字符，需要把它改成一个空格的字符串。
+
+⑥字符串的模糊比较 MySQL里用 字段名 like '%字符串%',Oracle里也可以用 字段名 like '%字符串%' ，但这种方法不能使用索引, 速度不快。
+
+⑦Oracle实现了ANSII SQL中大部分功能，如:事务的隔离级别、传播特性等，而MySQL在这方面还是比较的弱。
+
+
+
+## 数据类型
+
+| 编号 | Oracle                                                       | MySQL                                                        | 注释                                                         |
+| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | NUMBER                                                       | int / DECIMAL                                                | DECIMAL就是NUMBER(10,2)这样的结构INT就是是NUMBER(10)，表示整型；  MySQL有很多类int型，tinyint mediumint bigint等，不同的int宽度不一样 |
+| 2    | Varchar2（n）                                                | varchar(n)                                                   |                                                              |
+| 3    | Date                                                         | DATATIME                                                     | 日期字段的处理  MySQL日期字段分DATE和TIME两种，Oracle日期字段只有DATE，包含年月日时分秒信息，用当前数据库的系统时间为 SYSDATE, 精确到秒，或者用字符串转换成日期型函数TO_DATE(‘2001-08-01','YYYY-MM-DD')年-月-日 24小时:分钟:秒的格式YYYY-MM-DD HH24:MI:SS TO_DATE()还有很多种日期格式, 可以参看Oracle DOC.日期型字段转换成字符串函数TO_CHAR(‘2001-08-01','YYYY-MM-DD HH24:MI:SS')    日期字段的数学运算公式有很大的不同。MySQL找到离当前时间7天用DATE_FIELD_NAME ＞ SUBDATE（NOW（），INTERVAL 7 DAY）Oracle找到离当前时间7天用 DATE_FIELD_NAME ＞SYSDATE - 7;    MySQL中插入当前时间的几个函数是：NOW()函数以`'YYYY-MM-DD HH:MM:SS'返回当前的日期时间，可以直接存到DATETIME字段中。CURDATE()以'YYYY-MM-DD'的格式返回今天的日期，可以直接存到DATE字段中。CURTIME()以'HH:MM:SS'的格式返回当前的时间，可以直接存到TIME字段中。例：insert into tablename (fieldname) values (now())    而Oracle中当前时间是sysdate |
+| 4    | INTEGER                                                      | int / INTEGER                                                | MySQL中INTEGER等价于int                                      |
+| 5    | EXCEPTION                                                    | SQLEXCEPTION                                                 | 详见<<2009001-eService-O2MG.doc>>中2.5 MySQL异常处理         |
+| 6    | CONSTANT VARCHAR2(1)                                         | MySQL中没有CONSTANT关键字                                    | 从Oracle迁移到MySQL,所有CONSTANT常量只能定义成变量           |
+| 7    | TYPE g_grp_cur IS REF CURSOR;                                | 光标 : MySQL中有替代方案                                     | 详见<<2009001-eService-O2MG.doc>>中2.2 光标处理              |
+| 8    | TYPE unpacklist_type IS TABLE OF VARCHAR2(2000) INDEX BY BINARY_INTEGER; | 数组: MySQL中借助临时表处理  或者直接写逻辑到相应的代码中，  直接对集合中每个值进行相应的处理 | 详见<<2009001-eService-O2MG.doc>>中2.4 数组处理              |
+| 9    | 自动增长的序列                                               | 自动增长的数据类型                                           | MySQL有自动增长的数据类型，插入记录时不用操作此字段，会自动获得数据值。Oracle没有自动增长的数据类型，需要建立一个自动增长的序列号，插入记录时要把序列号的下一个值赋于此字段。 |
+| 10   | NULL                                                         | NULL                                                         | 空字符的处理  MySQL的非空字段也有空的内容，Oracle里定义了非空字段就不容许有空的内容。按MySQL的NOT NULL来定义Oracle表结构, 导数据的时候会产生错误。因此导数据时要对空字符进行判断，如果为NULL或空字符，需要把它改成一个空格的字符串。 |
+
+## 基本语法
+
+| 编号 | 类别                     | Oracle                                                       | MySQL                                                        | 注释                                                         |
+| ---- | ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | 变量的声明方式不同       | li_index NUMBER := 0                                         | DECLARE li_index INTEGER DEFAULT 0                           | 1. MySQL 使用DECLARE定义局部变量.  定义变量语法为: DECLARE var_name[,...] type [DEFAULT value] 要给变量提供一个默认值，需要包含一个DEFAULT子句。值可以被指定为一个表达式，不需要为一个常数。如果没有DEFAULT子句，初始值为NULL。 |
+| 2    | 变量的赋值方式不同       | lv_inputstr := iv_inputstr                                   | SET lv_inputstr = iv_inputstr                                | 1. Oracle变量赋值使用:=  MySQL 使用赋值使用set关键字. 将一个值赋给一个变量时使用"=". |
+| 3    | 跳出（退出）语句不同     | EXIT;                                                        | LEAVE procedure name;                                        | Oracle: 如果exit语句在循环中就退出当前循环.如果exit语句不再循环中,就退出当前过程或方法. |
+|      |                          | while 条件 loop  exit;  end loop;                            | label_name:while 条件 do  leave label_name;  end while label_name; | MySQL: 如果leave语句后面跟的是存储过程名,则退出当前存储过程. 如果leave语句后面跟的是lable名. 则退出当前lable. |
+| 4    | 定义游标                 | TYPE g_grp_cur IS REF CURSOR;                                | DECLARE cursor_name CURSOR FOR SELECT_statement;             | Oracle可以先定义游标,然后给游标赋值.  MySQL定义游标时就需要给游标赋值. MySQL定义游标出自 MySQL 5.1 参考手册20.2.11.1.声明光标. |
+| 5    | 定义数组                 | TYPE unpacklist_type IS TABLE OF VARCHAR2(2000) INDEX BY BINARY_INTEGER; | 可以使用临时表代替Oracle数组, 也可以循环拆分字符来替代Oracle数组. | 目前可以使用临时表来代替Oracle数组.  详见<<2009002-OTMPPS-Difficult Questions-0001.doc>>中2.4 MySQL数组处理部分 |
+| 6    | 注释方式不同             | "-- message" 或 "/** …. */" 或"/* …. */"                     | "-- message" 或 "/* …. */" 或 "#"                            | MySQL注释来自 MySQL 5.1参考手册 9.5. 注释语法, 建议同Oracle一样, 单行用--, 多行/* */ |
+| 7    | 自带日期时间函数格式不同 | Oracle时间格式：yyyy-MM-dd hh:mi:ss                          | MySQL时间格式：%Y-%m-%d %H:%i:%s                             | 1. MySQL日期字段分DATE和TIME两种.  Oracle日期字段只有DATE，包含年月日时分秒信息.  2. MySQL中取当前系统时间为now()函数,精确到秒.  Oracle中取当前数据库的系统时间为SYSDATE, 精确到秒. |
+| 8    | 日期加减                 | 当前时间加N天: sysdate+N  当前时间减N天: sysdate-N           | 日期相加: date_add(now(), INTERVAL 180 DAY)  日期相减: date_sub('1998-01-01 00:00:00', interval '1 1:1:1' day_second) |                                                              |
+| 9    | 字符串连接符不同         | result := v_int1\|\|v_int2;                                  | set result =concat(v_int1,v_int2);                           | 1. Oracle使用\|\|连接字符串,也可以使用concat函数. 但Oracle的concat函数只能连接两个字符串.  MySQL使用concat方法连接字符串. MySQL的concat函数可以连接一个或者多个字符串,如  MySQL> select concat('10'); 结果为: 10.  MySQL> select concat('11','22','33','aa'); 结果为: 112233aa <br /> 2. "\|\|"在MySQL是与运算 |
+| 10   | in()                     | in内最多1000个数据，多于1000用in(1000) or in(1001)           | in内的数据数量没有限制，可对sql的长度有限制，默认4M          |                                                              |
+| 11   | 分页函数                 | rownum                                                       | limit 起始位置，每页记录数                                   |                                                              |
+| 12   | 定义游标不同             | CURSOR l_bk_cur IS  SELECT B.BK_HDR_INT_KEY, B.BK_NUM  FROM ES_SR_DTL_VRB A, ES_BK_HDR B  WHERE A.BK_HDR_INT_KEY = B.BK_HDR_INT_KEY  AND b.BK_STATUS != ES_BK_PKG.g_status_can  AND A.SR_HDR_INT_KEY = ii_sr_hdr_int_key; | DECLARE l_bk_cur CURSOR  FOR SELECT B.BK_HDR_INT_KEY, B.BK_NUM  FROM ES_SR_DTL_VRB A, ES_BK_HDR B  WHERE A.BK_HDR_INT_KEY = B.BK_HDR_INT_KEY  AND b.BK_STATUS != ES_BK_PKG.g_status_can  AND A.SR_HDR_INT_KEY = ii_sr_hdr_int_key; | 详见<<2009002-OTMPPS-Difficult Questions-0001.doc>>中2.2 MySQL游标处理部分 |
+| 13   | 事务回滚                 | ROLLBACK;                                                    | ROLLBACK;                                                    | Oracle和MySQL中使用方法相同                                  |
+| 14   | GOTO语句                 | GOTO check_date;                                             | GOTO check_date;                                             | Oracle和MySQL中使用方法相同                                  |
+
+## 函数
+
+| 编号 | 类别         | Oracle                                                  | MySQL                                                        | 注释                                                         |
+| ---- | ------------ | ------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | 数字函数     | round(1.23456,4)                                        | round(1.23456,4)                                             | 一样：<br/> Oracle：select round(1.23456,4) value from dual<br/> MySQL：select round(1.23456,4) value |
+| 2    |              | abs(-1)                                                 | abs(-1)                                                      | 功能: 将当前数据取绝对值<br/> 用法: Oracle和MySQL用法一样<br/> MySQL: select abs(-1) value<br/> Oracle: select abs(-1) value from dual |
+| 3    |              | ceil(-1.001))                                           | ceiling(-1.001)                                              | 功能: 返回不小于 X 的最小整数<br/> 用法:<br/> MySQL: select ceiling(-1.001) value<br/> Oracle: select ceil(-1.001) value from dual |
+| 4    |              | floor(-1.001)                                           | floor(-1.001)                                                | 功能: 返回不大于 X 的最大整数值<br/> 用法:<br/> MySQL: select floor(-1.001) value<br/> Oracle: select floor(-1.001) value from dual |
+| 5    |              | Max(expr)/Min(expr)                                     | Max(expr)/Min(expr)                                          | 功能:返回 expr 的最小或最大值。MIN() 和 MAX() 可以接受一个字符串参数；在这<br/> 种情况下，它们将返回最小或最大的字符串传下。<br/> 用法:<br/> Oracle: select max(user_int_key) from sd_usr;<br/> MySQL: select max(user_int_key) from sd_usr; |
+| 6    | 字符串函数   | ascii(str)                                              | ascii(str)                                                   | 功能:返回字符串 str 最左边的那个字符的 ASCII 码值。如果 str 是一个空字符串，<br/> 那么返回值为 0。如果 str 是一个 NULL，返回值也是 NULL.<br/> 用法:<br/> MySQL:select ascii('a') value<br/> Oracle:select ascii('a') value from dual |
+| 7    |              | CHAR(N,...)                                             | CHAR(N,...)                                                  | 功能:CHAR() 以整数类型解释参数，返回这个整数所代表的 ASCII 码值给出的字符<br/> 组成的字符串。NULL 值将被忽略.<br/> 用法:<br/> MySQL:select char(97) value<br/> Oracle:select chr(97) value from dual |
+| 8    |              | REPLACE(str,from_str,to_str)                            | REPLACE(str,from_str,to_str)                                 | 功能: 在字符串 str 中所有出现的字符串 from_str 均被 to_str 替换，然后返回这个字符串.<br/> 用法:<br/> MySQL: SELECT REPLACE('abcdef', 'bcd', 'ijklmn') value<br/> Oracle: SELECT Replace('abcdef', 'bcd', 'ijklmn') value from dual |
+| 9    |              | INSTR('sdsq','s',2)                                     | INSTR('sdsq','s')                                            | 参数个数不同<br/> Oracle: select INSTR('sdsq','s',2) value from dual（要求从位置2开始）<br/> MySQL: select INSTR('sdsq','s') value（从默认的位置1开始） |
+| 10   |              | SUBSTR('abcd',2,2)                                      | substring('abcd',2,2)                                        | 函数名称不同：<br/> Oracle: select substr('abcd',2,2) value from dual<br/> MySQL: select substring('abcd',2,2) value |
+| 11   |              | instr(‘abcdefg','ab')                                   | locate(‘ab','abcdefg')                                       | 函数名称不同：<br/> instr -> locate（注意：locate的子串和总串的位置要互换）<br/> Oracle: SELECT instr('abcdefg', 'ab') VALUE FROM DUAL<br/> MySQL: SELECT locate('ab', 'abcdefg') VALUE |
+| 12   |              | length（str）                                           | char_length()                                                | 函数名称不同：<br/> ORACEL: SELECT length('AAAASDF') VALUE FROM DUAL<br/> MySQL: SELECT char_length('AAAASDF') VALUE |
+| 13   |              | REPLACE('abcdef', 'bcd', 'ijklmn')                      | REPLACE('abcdef', 'bcd', 'ijklmn')                           | 一样：<br/> Oracle: SELECT REPLACE('abcdef', 'bcd', 'ijklmn') value from dual<br/> MySQL: SELECT REPLACE('abcdef', 'bcd', 'ijklmn') value |
+| 14   |              | LPAD('abcd',14, '0')                                    | LPAD('abcd',14, '0')                                         | 一样：  Oracle: select LPAD('abcd',14, '0') value from dual<br/> MySQL: select LPAD('abcd',14, '0') value from dual |
+| 15   |              | UPPER(iv_user_id)                                       | UPPER(iv_user_id)                                            | 一样：<br/> Oracle: select UPPER(user_id) from sd_usr;<br/> MySQL: select UPPER(user_id) from sd_usr; |
+| 16   |              | LOWER(iv_user_id)                                       | LOWER(iv_user_id)                                            | 一样：<br/> Oracle: select LOWER(user_id) from sd_usr;<br/> MySQL: select LOWER(user_id) from sd_usr; |
+| 17   | 控制流函数   | nvl(u.email_address, 10)                                | IFNULL(u.email_address, 10)<br/> 或<br/> ISNULL(u.email_address) | 函数名称不同（根据不同的作用进行选择）：<br/> Oracle: select u.email_address, nvl(u.email_address, 10) value from sd_usr u (如果u.email_address=NULl,就在DB中用10替换其值)<br/> MySQL: select u.email_address, IFNULL(u.email_address, 10) value from sd_usr u(如果u.email_address=NULl,显示结果中是10，而不是在DB中用10替换其值)<br/> select u.email_address, ISNULL(u.email_address) value from sd_usr u（如果u.email_address是NULL, 就显示1<true>,否则就显示0<false>） |
+| 18   |              | DECODE(iv_sr_status,g_sr_status_com, ld_sys_date, NULL) | 无，请用IF或CASE语句代替.<br/> IF语句格式:(expr1,expr2,expr3) | 说明:<br/> \1. decode(条件,值1,翻译值1,值2,翻译值2,...值n,翻译值n,缺省值)<br/> 该函数的含义如下：<br/> IF 条件=值1 THEN<br/> 　　　RETURN(翻译值1)<br/> ELSIF 条件=值2 THEN<br/> 　　　RETURN(翻译值2)<br/> 　　　......<br/> ELSIF 条件=值n THEN<br/> 　　　RETURN(翻译值n)<br/> ELSE<br/> 　　　RETURN(缺省值)<br/> END IF<br/> <br/> \2. MySQL If语法说明<br/> 功能: 如果 expr1 是TRUE (expr1 <> 0 and expr1 <> NULL)，则IF()的返回值为expr2;<br/> 否则返回值则为 expr3。IF() 的返回值为数字值或字符串值，具体情况视其所在<br/> 语境而定。<br/> 用法:<br/> MySQL: SELECT IF(1>2,2,3); |
+| 19   | 类型转换函数 | TO_CHAR(SQLCODE)                                        | date_format/ time_format                                     | 函数名称不同  SQL> select to_char(sysdate,'yyyy-mm-dd') from dual; <br />SQL> select to_char(sysdate,'hh34-mi-ss') from dual;<br/> MySQL> select date_format(now(),'%Y-%m-%d');<br/> MySQL> select time_format(now(),'%H-%i-%S'); |
+| 20   |              | to_date(str,format)                                     | STR_TO_DATE(str,format)                                      | 函数名称不同：<br/> Oracle:SELECT to_date('2009-3-6','yyyy-mm-dd') VAULE FROM DUAL<br/> MySQL: SELECT STR_TO_DATE('2004-03-01', '%Y-%m-%d') VAULE |
+| 21   |              | trunc(-1.002)                                           | cast(-1.002 as SIGNED)                                       | 函数名称不同：<br/> TRUNC函数为指定元素而截去的日期值。<br/> Oracle： select trunc(-1.002) value from dual<br/> MySQL：select cast(-1.002 as SIGNED) value<br/> MySQL：<br/> 字符集转换 : CONVERT(xxx USING gb2312)<br/> 类型转换和SQL Server一样,就是类型参数有点点不同 : CAST(xxx AS 类型) , CONVERT(xxx,类型)，类型必须用下列的类型：<br/> <br/> 可用的类型　<br/> 二进制,同带binary前缀的效果 : BINARY<br/> 字符型,可带参数 : CHAR()<br/> 日期 : DATE<br/> 时间: TIME<br/> 日期时间型 : DATETIME<br/> 浮点数 : DECIMAL<br/> 整数 : SIGNED<br/> 无符号整数 : UNSIGNED |
+| 22   |              | TO_NUMBER(str)                                          | CAST("123" AS SIGNED INTEGER)                                | 函数名称不同<br/> Oracle:SELECT TO_NUMBER('123') AS VALUE FROM DUAL;<br/> MySQL: SELECT CAST("123" AS SIGNED INTEGER) as value;<br/> SIGNED INTEGER:带符号的整形 |
+| 23   | 时间函数     | SYSDATE                                                 | now() / SYSDATE()                                            | 写法不同：<br/> Oracle:select SYSDATE value from dual<br/> MySQL:select now() value<br/> select sysdate() value |
+| 24   |              | Next_day(sysdate,7)                                     | 自定义一个函数:F_COMMON_NEXT_DAY(date,int)                   | 函数名称不同：<br/> Oracle: SELECT Next_day(sysdate,7) value FROM DUAL<br/> MySQL: SELECT F_COMMON_NEXT_DAY(SYSDATE(), 3) value from DUAL;<br/> (3:指星期的索引值)返回的指定的紧接着下一个星期的日期 |
+| 25   |              | ADD_MONTHS(sysdate, 2)                                  | DATE_ADD(sysdate(), interval 2 month)                        | 函数名称不同:<br/> Oracle: SELECT ADD_MONTHS(sysdate, 2) as value from DUAL;<br/> MySQL: SELECT DATE_ADD(sysdate(), interval 2 month) as value from DUAL; |
+| 26   |              | 2个日期相减(D1-D2)                                      | DATEDIFF(date1,date2)                                        | 功能: 返回两个日期之间的天数。<br/> 用法:<br/> MySQL: SELECT DATEDIFF('2008-12-30','2008-12-29') AS DiffDate<br/> Oracle: 直接用两个日期相减（比如d1-d2=12.3） |
+| 27   | SQL函数      | SQLCODE                                                 | MySQL中没有对应的函数，但JAVA中SQLException。getErrorCode()函数可以获取错误号 | Oracle内置函数SQLCODE和SQLERRM是特别用在OTHERS处理器中，分别用来返回Oracle的错误代码和错误消息。<br/> MySQL: 可以从JAVA中得到错误代码，错误状态和错误消息 |
+| 28   |              | SQLERRM                                                 | MySQL中没有对应的函数，但JAVA中SQLException。getMessage()函数可以获取错误消息 | Oracle内置函数SQLCODE和SQLERRM是特别用在OTHERS处理器中，分别用来返回Oracle的错误代码和错误消息。<br/> MySQL: 可以从JAVA中得到错误代码，错误状态和错误消息 |
+| 29   |              | SEQ_BK_DTL_OPT_INT_KEY.NEXTVAL                          | 自动增长列                                                   | 在MySQL中是自动增长列. 如下方法获取最新ID:<br/> START TRANSACTION;<br/> INSERT INTO user(username,password)<br/> VALUES (username,MD5(password));<br/> SELECT LAST_INSERT_ID() INTO id;<br/> COMMIT; |
+| 30   |              | SUM(enable_flag)                                        | SUM(enable_flag)                                             | 一样：<br/> ORCALE： SELECT SUM(enable_flag) FROM SD_USR;<br/> MySQL： SELECT SUM(enable_flag) FROM SD_USR; |
+| 31   |              | DBMS_OUTPUT.PUT_LINE(SQLCODE)                           | 在MySQL中无相应的方法，其作用是在控制台中打印，用于测试，对迁移无影响。 | dbms_output.put_line每行只能显示255个字符，超过了就会报错    |
+
+## 循环语句
+
+| 编号 | 类别           | Oracle                                                       | MySQL                                                        | 注释                                                         |
+| ---- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | IF语句使用不同 | IF iv_weekly_day = 'MON'THEN  ii_weekly_day := 'MON';  ELSIF iv_weekly_day = 'TUE' THEN  ii_weekly_day := 'TUE';  END IF; | IF iv_weekly_day = 'MON'THEN  set ii_weekly_day = 'MON';  ELSEIF iv_weekly_day = 'TUE' THEN  set ii_weekly_day = 'TUE';  END IF; | 1. MySQL和Oracle除了关键字有一个字差别外(ELSEIF/ELSIF),if语句使用起来完全相同.  2. MySQL if语句语法: 摘自 MySQL 5.1 参考手册 20.2.12.1. IF语句  IF search_condition THEN statement_list  [ELSEIF search_condition THEN statement_list] ...  [ELSE statement_list]  END IF  IF实现了一个基本的条件构造。如果search_condition求值为真，相应的SQL语句列表被执行。如果没有search_condition匹配，在ELSE子句里的语句列表被执行。statement_list可以包括一个或多个语句。 |
+| 2    | FOR语句不同    | FOR li_cnt IN 0..(ii_role_cnt-1) LOOP  SELECT COUNT(*) INTO li_role_ik_cnt FROM SD_ROLE  WHERE ROLE_CD = lo_aas_role_upl(li_cnt);  IF li_role_ik_cnt = 0 THEN  RETURN 'N';  END IF;  li_role_ik_cnt := -3;  END LOOP; | loopLable:LOOP  IF i > (ii_role_cnt-1) THEN  LEAVE looplable;  ELSE  SELECT COUNT(*) INTO li_role_ik_cnt FROM SD_ROLE  WHERE ROLE_CD = 'ADMIN_SUPER'; /*lo_aas_role_upl(li_cnt);*/  IF li_role_ik_cnt = 0 THEN  RETURN 'N';  END IF;  SET li_role_ik_cnt = -3;  SET i = i+1;  END IF;  END LOOP loopLable; | 1. Oracle使用For语句实现循环.  MySQL使用Loop语句实现循环.  2. Oracle 使用For…loop关键字.  MySQL使用loopLable:LOOP实现循环. |
+| 3    | while语句不同  | WHILE lv_inputstr IS NOT NULL LOOP  ...  END LOOP;           | WHILE lv_inputstr IS NOT NULL DO  ...  END WHILE;            | 1. Oracle 中使用while语句关键字为: while 表达式 loop… end loop;  MySQL 中使用while语句关键字为: while 表达式 do… end while; |
+
+## 存储过程&Function
+
+| 编号 | 类别                               | Oracle                                                       | MySQL                                                        | 注释                                                         |
+| ---- | ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1    | 创建存储过程语句不同               | create or replace procedure P_ADD_FAC(  id_fac_cd IN ES_FAC_UNIT.FAC_CD%TYPE) is | DROP PROCEDURE IF EXISTS `SD_USER_P_ADD_USR`;  create procedure P_ADD_FAC(  id_fac_cd varchar(100)) | 1.在创建存储过程时如果存在同名的存储过程,会删除老的存储过程.  Oracle使用create or replace.  MySQL使用先删除老的存储过程,然后再创建新的存储过程.  2. Oracle 存储过程可以定义在package中,也可以定义在Procedures中. 如果定义在包中,一个包中可以包含多个存储过程和方法.如果定义在Procedures中,存储过程中不可以定义多个存储过程.  MySQL 存储过程中不可以定义多个存储过程.  3. Oracle中字符串类型可以使用varchar2.  MySQL 需要使用varchar  4. Oracle中参数varchar长度不是必须的,  MySQL中参数varchar长度是必须的, 比如varchar(100) |
+| 2    | 创建函数语句不同                   | CREATE OR REPLACEFUNCTION F_ROLE_FACS_GRP(  ii_role_int_key IN SD_ROLE.ROLE_INT_KEY%TYPE  ) RETURN VARCHAR2 | DROP FUNCTION IF EXISTS `SD_ROLE_F_ROLE_FACS_GRP`;  CREATE FUNCTION `SD_ROLE_F_ROLE_FACS_GRP`(  ii_role_int_key INTEGER(10)  ) RETURNS varchar(1000) | 1.在创建函数时如果存在同名的函数,会删除老的函数.  Oracle使用create or replace.  MySQL使用先删除老的函数,然后再创建新的函数.  2. Oracle 函数可以定义在package中,也可以定义在Functions中. 如果定义在包中,一个包中可以包含多个存储过程和函数.如果定义在Functions中,每个函数只能定义一个函数.  MySQL Functions不可以定义多个函数.  3. Oracle返回值用return.  MySQL返回值用returns. |
+| 3    | 传入参数写法不同                   | procedure P_ADD_FAC(  id_fac_cd IN ES_FAC_UNIT.FAC_CD%TYPE)  | create procedure P_ADD_FAC(  (in) id_fac_cd varchar(100))    | 1. Oracle存储过程参数可以定义为表的字段类型.  MySQL存储过程不支持这种定义方法.需要定义变量的实际类型和长度.  2. Oracle 参数类型in/out/inout写在参数名后面.  MySQL 参数类型in/out/inout写在参数名前面.  3. Oracle 参数类型in/out/inout 都必须写.  MySQL 参数类型如果是in,则可以省略. 如果是out或inout则不能省略.  注意: MySQL中指定参数为IN, OUT, 或INOUT 只对PROCEDURE是合法的。（FUNCTION参数总是被认为是IN参数） RETURNS字句只能对FUNCTION做指定，对函数而言这是强制的。它用来指定函数的返回类型，而且函数体必须包含一个RETURN value语句。 |
+|      |                                    | function func_name(  gw_id in(out) varchar2 )                | create function func_name(  gw_id varchar（100))             |                                                              |
+| 4    | 包的声明方式                       | create or replace package/package body package name          | 拆分成多个存储过程或函数                                     | Oracle可以创建包,包中可以包含多个存储过程和方法.  MySQL没有没有包这个概念,可以分别创建存储过程和方法. 每个存储过程或方法都需要放在一个文件中.  例1: 方法命名  Oracle 中SD_FACILITY_PKG.F_SEARCH_FAC  to MySQL SD_FACILITY_F_SEARCH_FAC  例2: 过程命名  Oracle 中SD_FACILITY_PKG.P_ADD_FAC  to MySQL SD_FACILITY_P_ADD_FAC |
+| 5    | 存储过程返回语句不一样             | return;                                                      | LEAVE proc; (proc 代表最外层的begin end)                     | Oracle存储过程和方法都可以使用return退出当前过程和方法.  MySQL存储过程中只能使用leave退出当前存储过程.不可以使用return.  MySQL方法可以使用return退出当前方法. |
+| 6    | 存储过程异常处理不一样             | EXCEPTION  WHEN OTHERS THEN  ROLLBACK ;  ov_rtn_msg := c_sp_name\|\|'('\|\| li_debug_pos \|\|'):'\|\|  TO_CHAR(SQLCODE)\|\|': '\|\|SUBSTR(SQLERRM,1,100); | DECLARE EXIT HANDLER FOR SQLEXCEPTION  BEGIN  ROLLBACK ;  set ov_rtn_msg = concat(c_sp_name,'(', li_debug_pos ,'):',  TO_CHAR(SQLCODE),': ',SUBSTR(SQLERRM,1,100));  END; | Oracle : 内部异常不需要定义,在存储过程或函数末尾写上EXCEPTION后,后面的部分即为异常处理的部分. Oracle可以定义自定义异常,自定义异常需要使用raise关键字抛出异常后,才可以在EXCEPTION中捕获.    MySQL: MySQL内部异常也需要先定义,在定义的同时也需要实现异常的功能.  目前MySQL不支持自定义异常. |
+| 7    | 过程和函数的声明变量的位置不同     | 声明变量在begin…end体之前                                    | 声明变量在begin...end体内，begin之后其他任何内容之前         |                                                              |
+| 8    | NO_DATA_FOUND异常处理              | EXCEPTION  WHEN NO_DATA_FOUND THEN  oi_rtn_cd := 1;  ov_rtn_msg := SD_COMMON.P_GET_MSG('DP-CBM-01100a-016',  li_sub_rtn_cd,  lv_sub_rtn_msg  ); | 使用FOUND_ROWS()代替NO_DATA_FOUND. 详见注释.                 | Oracle中:  NO_DATA_FOUND是游标的一个属性.  当select没有查到数据就会出现 no data found 的异常，程序不会向下执行.    MySQL:  没有NO_DATA_FOUND这个属性.但可是使用FOUND_ROWS()方法得到select语句查询出来的数据.如果FOUND_ROWS()得到的值为0,就进入异常处理逻辑. |
+| 9    | 在存储过程中调用存储过程方式的不同 | Procedure_Name(参数);                                        | Call Procedure_Name(参数);                                   | MySQL存储过程调用存储过程，需要使用Call pro_name(参数).  Oracle调用存储过程直接写存储过程名就可以了. |
+| 10   | 抛异常的方式不同                   | RAISE Exception_Name;                                        | 见备注                                                       | 详见<<2009002-OTMPPS-Difficult Questions-0001.doc>>中2.5 MySQL异常处 |
+
+
 
 ## 函数区别
 
