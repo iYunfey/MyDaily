@@ -359,11 +359,13 @@ COLLATE 校对集编码     设置校对集编码
 
 ## 1.7、数据类型(列类型)
 
+
+
 ### 1、数值类型
 
 #### a、整型
 
-非负则加上UNSIGNED
+任何整数类型都可以加上UNSIGNED属性，表示数据是无符号的，即非负整数。 长度：整数类型可以被指定长度，例如：INT(11)表示长度为11的INT类型。长度在大多数场景是没有意义的，它不会限制值的合法范围，只会影响显示字符的个数，而且需要和UNSIGNED ZEROFILL属性配合使用才有意义。 例子，假定类型设定为INT(5)，属性为UNSIGNED ZEROFILL，如果用户插入的数据为12的话，那么数据库实际存储数据为00012。
 
 | 类型      | 字节        | 范围（有符号位）                                            | 范围（无符号位）                         |
 | --------- | ----------- | ----------------------------------------------------------- | ---------------------------------------- |
@@ -425,6 +427,10 @@ varchar(M) 	可变字符串，速度慢，但节省空间
     varchar 的最大有效长度由最大行大小和使用的字符集确定。
     最大有效长度是65532字节，因为在varchar存字符串时，第一个字节是空的，不存在任何数据，然后还需两个字节来存放字符串的长度，所以有效长度是65535-1-2=65532字节。
     例：若一个表定义为 CREATE TABLE tb(c1 int, c2 char(30), c3 varchar(N)) charset=utf8; 问N的最大值是多少？ 答：(65535-1-2-4-30*3)/3
+    
+使用策略： 
+对于经常变更的数据来说，CHAR比VARCHAR更好，因为CHAR不容易产生碎片。 对于非常短的列，CHAR比VARCHAR在存储空间上更有效率。使用时要注意只分配需要的空间，更长的列排序时会消耗更多内存。
+尽量避免使用TEXT/BLOB类型，查询时会使用临时表，导致严重的性能开销。
 ```
 
 #### b、blob, text
@@ -447,7 +453,7 @@ text 非二进制字符串（字符字符串）
 
 ### 3、日期时间类型
 
-一般用整型保存时间戳，因为PHP可以很方便的将时间戳进行格式化。尽量使用timestamp而不是datatime
+一般用整型保存时间戳，因为PHP可以很方便的将时间戳进行格式化。尽量使用timestamp而不是datatime，空间效率高于datetime， 用整数保存时间戳通常不方便处理。 如果需要存储微秒，可以使用bigint存储。
 
 |           | 字节 |            | 范围                                       |
 | --------- | ---- | ---------- | ------------------------------------------ |
@@ -487,11 +493,12 @@ year        YYYY
 
 ```mysql
 enum(val1, val2, val3...)
-    在已知的值中进行单选。最大数量为65535.
+    把不重复的数据存储为一个预定义的集合。在已知的值中进行单选。最大数量为65535. 有时可以使用ENUM代替常用的字符串类型。
     枚举值在保存时，以2个字节的整型(smallint)保存。每个枚举值，按保存的位置顺序，从1开始逐一递增。
     表现为字符串类型，存储却是整型。
     NULL值的索引是NULL。
     空字符串错误值的索引值是0。
+     ENUM存储非常紧凑，会把列表值压缩到一个或两个字节。 ENUM在内部存储时，其实存的是整数。 尽量避免使用数字作为ENUM枚举的常量，因为容易混乱。 排序是按照内部存储的整数
 ```
 
 #### b、集合（set）
@@ -644,12 +651,99 @@ set(val1, val2, val3...)
         -- 运算数：变量（字段）、值、函数返回值
         -- 运算符：
             =, <=>, <>, !=, <=, <, >=, >, !, &&, ||,
-            in (not) null, (not) like, (not) in, (not) between and, is (not), and, or, not, xor
+            in (not) null, (not) like, regexp, (not) in, (not) between and, is (not), and, or, not, xor
             is/is not 加上ture/false/unknown，检验某个值的真假
             <=>与<>功能相同，<=>可用于null比较
 ```
 
-d、GROUP BY 子句, 分组子句
+#### like和regexp的区别
+
+```mysql
+like有两个模式：_和%
+
+_：表示单个字符，用来查询定长的数据
+	select name from table where name like '陈__';
+
+%：表示0个或多个任意字符
+	select name from table where name like '陈%';
+	select name from table where name like '%宏%';
+	
+1.基本字符匹配
+	select * from table where col regexp '.000';
+2.like匹配整个值 通配符%
+
+3.regexp可使用正则自由定制 定位符号^$
+4.如果要区分大小写，应该使用BINARY关键字，如where xxx REGEXP BINARY 'Hello.000'
+5.使用|实现or效果
+	select * from table where col regexp '1000|2000';
+6.匹配几个字符之一，用[和]扩起来
+	select * from table where col regexp '[abcde]';
+7.匹配范围：[0-9] [A-Z] [a-z]
+	[^0-9] ^表示非，即匹配不是0-9后面的比前面大
+	select * from table where col regexp '[0-9]Ton';
+8.匹配特殊字符使用\\进行转义
+\\.能够匹配.
+\\f换页
+\\n换行
+\\r回车
+\\t制表
+\\纵向制表
+注意：
+　　a)为了匹配\本身，需要使用\\\
+　　b)在一般情况下正则表达式的转义加一个“\”就可以了，在MySQL中需要加两个。
+　　
+9.匹配字符类（Posix字符类）
+[:alnum:]		任意字母和数字，同[0-9A-Za-z]
+[:alpha:]		任意字母，同[A-Za-z]
+[:blank:]		空格和制表，同[\\t]
+[:cntrl:]		ASCⅡ控制符（ASCⅡ0到31和127）
+[:digit:]		任意数字，同[0-9]
+[:graph:]		和[[:print:]]相同，但不包含空格
+[:lower:]		任意小写字母，同[a-z]
+[:print:]		可打印任意字符
+[:punct:]		既不在[[:alnum:]]又不在[[:cntrl:]]中的字符
+[:space:]		包含空格在内的任意空白字符，同[\\f\\n\\r\\t\\v]
+[:upper:]		任意大写字母，同[A-Z]
+[:xdigit:]		任意16进制数，同[0-9A-Fa-f]
+
+　　使用的时候需要外面加一层[]，例如[[:digit:]]
+	select * from table where col regexp 'name[[:digit:]]';　　
+	
+10.匹配多个实例
+    * 0或多个
+    + 1或多个
+    ? 0或1个
+    {n} 指定n个
+    {n,} 不少于n个
+    {n,m} n-m个
+    
+	select * from table where col regexp '[0-9]{1,3}';
+	
+11.定位符
+
+^ 开始
+$ 结尾
+[[:<:]] 词的开始
+[[:>:]] 词的结尾
+
+12.^有两个用法，一个是非，一个是文本的开始，用[]中表示非，否则是文本的开始。
+
+13.MySQL的正则比较简化，没有惰性匹配／贪婪匹配，[]内不支持\w\s\d这种语法，也不支持中文。
+
+14.这两种模式不要混着用，like模式是不支持正则表达式的，REGEXP模式也不认识_和%。
+
+15.注意：regexp == rlike 同义词  not like  not regexp
+
+16.in不支持模糊查询，如：
+
+	select * from table where name in ('%宏%');
+	
+17.like concat('%',name,'%')作用在于name为变量，在传参的时候方便。
+```
+
+
+
+### d、GROUP BY 子句, 分组子句
 
 ```mysql
     GROUP BY 字段/别名 [排序方式]
@@ -872,30 +966,117 @@ TRUNCATE [TABLE] tbl_name
 
 #### 获取
 
-now(), current_timestamp();     -- 当前日期时间
-current_date();                 -- 当前日期
-current_time();                 -- 当前时间
-date('yyyy-mm-dd hh:ii:ss');    -- 获取日期部分
-time('yyyy-mm-dd hh:ii:ss');    -- 获取时间部分
+##### 获取当前日期
 
-unix_timestamp();               -- 获得unix时间戳
-from_unixtime();                -- 从时间戳获得时间
+```mysql
+1、curdate()
+	select curdate();--2022-03-18
+2、current_date()
+3、date('yyyy-mm-dd hh:ii:ss')
+	select time('2022-03-18 23:59:59');--2022-03-18
+```
+
+##### 获取当前日期及时间
+
+```mysql
+1、now(),
+	select now();----2022-03-18 23:59:59
+2、current_timestamp(),
+	select current_timestamp();--2022-03-18 23:59:59
+```
+
+##### 获取当前时时间
+
+```mysql
+1、current_time()
+2、time('yyyy-mm-dd hh:ii:ss')
+	select time('2022-03-18 23:59:59');--23:59:59
+```
+
+##### 获取时间戳
+
+```mysql
+unix_timestamp(); -- 获得unix时间戳
+	select unix_timestamp();-- 1647585002
+from_unixtime(); -- 从时间戳获得时间
+	select from_unixtime(1647585002);--2022-03-18 23:59:59
+```
+
+
 
 #### 格式化
 
+```mysql
 date_format('yyyy-mm-dd hh:ii:ss', '%d %y %a %d %m %b %j'); -- 格式化时间
+```
+
+
 
 #### 计算
 
-获取当前系统时间前三十分钟
+##### date_add(date,interval expr unit)
+
+##### date_sub(date,interval expr unit)
 
 ```mysql
+unit参数值：
+	year -- 年，date必须最少精确到日，对应expr为整数,否则查询为null
+		select date_add('2022-03',interval 1 year);-- null
+		select date_add('2022-03-18',interval 1 year);-- 2023-03-18
+		select date_add('2022-03-18 23:59:59',interval 1 year);-- 2023-03-18 23:59:59
+	day	-- 天，对应expr可以为小数，小数点后一位四舍五入\
+		select date_add('2022-03-18 23:59:59', interval 0 day);-- 2022-03-18 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 0.00 day);-- 2022-03-18 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 0.49 day);-- 2022-03-18 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 0.50 day);-- 2022-03-19 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 0.51 day);-- 2022-03-19 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 1 day);-- 2022-03-19 23:59:59
+		select date_add('2022-03-18 23:59:59', interval 1.0 day);-- 2022-03-19 23:59:59
+	minute -- 分钟
+	second -- 秒
+	year_month -- 年到月
+	day_hour -- 天到时
+		select date_add('2022-03-18 23:59:59', interval '-1 10' day_minute);-- 2022-03-17 13:59:59
+	day_minute -- 天到分
+		select date_add('2022-03-18 23:59:59', interval '1 1:1' day_minute);-- 2022-03-20 01:00:59
+	day_second -- 天到秒
+		select date_add('2022-03-18 23:59:59', interval '1 1:1:1' day_second);-- 2022-03-20 01:01:00
+	minute_second -- 分到秒
+		select date_add('2022-03-18 23:59:59', interval '1:1' minute_second);-- 2022-03-19 00:01:00
+	second_microsecond -- 秒到微秒
+		select date_add('2022-03-18 23:59:59.000002', interval '1.999999' second_microsecond);-- 2022-03-19 00:00:01.000001
+		
+		
+获取当前系统时间前三十分钟
 select * from table_name where 时间类型字段 >= date_add(now(), interval -30 minute);
 
 或者
 
-select * from table_name where 时间类型字段 >= data_sub(now(), interval 30 minute);
+select * from table_name where 时间类型字段 >= date_sub(now(), interval 30 minute);
 ```
+
+##### adddate()
+
+##### subdate()
+
+```mysql
+adddate(date,intervalexpr unit)用法和date_add(date,interval expr unit)一样
+	select * from table_name where 时间类型字段 >= adddate(now(), interval -30 minute);
+adddate（date，num）返回 date 日期开始，之后 num 天的日期
+subdate（date，num）返回 date 日期开始，之前 num 天的日期
+```
+
+##### datediff（d1,d2）
+
+```mysql
+返回d1 和 d2 之间的天数差
+
+select datediff(now(),now());-- 0
+
+select datediff(now(),adddate(now(),5));-- -5
+```
+
+
 
 
 
@@ -912,6 +1093,14 @@ select * from table_name where 时间类型字段 >= data_sub(now(), interval 30
 #### substring(str, position [,length]) 
 
 -- 从str的position开始,取length个字符
+
+#### insert (s1,index,length,s2) 替换函数
+
+o S1 表示被替换的字符串o s2 表示将要替换的字符串
+
+o Index 表示被替换的位置, 从 1 开始
+
+o Lebgth 表示被替换的长度
 
 #### replace(str ,search_str ,replace_str)
 
@@ -935,7 +1124,11 @@ select * from table_name where 时间类型字段 >= data_sub(now(), interval 30
 
 #### left(string, length)
 
--- 从string2中的左边起取length个字符
+-- 从string中的左边起取length个字符
+
+#### right(string, length)
+
+-- 从string中的右边起取length个字符
 
 #### load_file(file_name) 
 
@@ -964,6 +1157,8 @@ locate(substr,str) > 0则表示在字符串str中找到了子串substr，否则�
 #### rpad(string, length, pad) 
 
 --在str后用pad补充,直到长度为length
+
+#### reverse（str）将 str 字符串倒序输出
 
 #### rtrim(string)           
 
