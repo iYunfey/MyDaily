@@ -1015,7 +1015,7 @@ from_unixtime(); -- 从时间戳获得时间
 #### 格式化
 
 ```mysql
-date_format('yyyy-mm-dd hh:ii:ss', '%d %y %a %d %m %b %j'); -- 格式化时间
+date_format(date,'%Y-%m-%d %H:%i:%s'); -- 格式化时间
 ```
 
 
