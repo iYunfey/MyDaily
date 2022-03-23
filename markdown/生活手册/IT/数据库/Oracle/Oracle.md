@@ -1,3 +1,5 @@
+Oracle常见问题：https://support.oracle.com/knowledge/Oracle%20Cloud/1533057_1.html
+
 # 1、SQL
 
 ## 1.1、基本函数
