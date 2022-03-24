@@ -37,13 +37,10 @@
 // Related Topics 数组 双指针 排序 👍 1023 👎 0
 
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 四数之和
- *
  */
 public class P18_FourSum {
     public static void main(String[] args) {
