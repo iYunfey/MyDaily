@@ -95,3 +95,60 @@ Markdown 使用 `[]()` 来表示超链接，中括号表示链接文字，小括
 | 左对齐   | :---  |
 | 居中对齐 | :---: |
 | 右对齐   | ---:  |
+
+## 合并单元格的表格
+
+Markdown本身不提供单元格合并语法，但是Markdown是兼容HTML的，因此，我们可以通过HTML的方式实现单元格合并。
+
+**主要用到了HTML的一个标签：**
+
+- rowspan：规定单元格可横跨的行数。横跨几行属性值就写几，如上图中横跨7行，则rowspan=”7”
+- colspan：规定单元格可纵深的列数。
+
+html代码如下
+
+```
+<table>
+    <tr>
+        <td>列一</td> 
+        <td>列二</td> 
+   </tr>
+   <tr>
+        <td colspan="2">合并行</td>    
+   </tr>
+   <tr>
+        <td>列一</td> 
+        <td>列二</td> 
+   </tr>
+    <tr>
+        <td rowspan="2">合并列</td>    
+        <td >行二列二</td>  
+    </tr>
+    <tr>
+        <td >行三列二</td>  
+    </tr>
+</table>
+```
+
+显示效果
+
+<table>
+    <tr>
+        <td>列一</td> 
+        <td>列二</td> 
+   </tr>
+   <tr>
+        <td colspan="2">合并行</td>    
+   </tr>
+   <tr>
+        <td>列一</td> 
+        <td>列二</td> 
+   </tr>
+    <tr>
+        <td rowspan="2">合并列</td>    
+        <td >行二列二</td>  
+    </tr>
+    <tr>
+        <td >行三列二</td>  
+    </tr>
+</table>
