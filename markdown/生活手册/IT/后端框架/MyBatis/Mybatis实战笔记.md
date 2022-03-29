@@ -1,9 +1,133 @@
+英文官网：https://mybatis.org/mybatis-3/
+
+中文官网：https://mybatis.net.cn/index.html
+
+# 0、Mybatis generator
+
+## 使用mybatis generator逆向工程生成model、mapper以及xml
+
+### 第一步：pom文件中添加插件，用于生成代码
+
+```xml
+<plugin>
+    <groupId>org.mybatis.generator</groupId>
+    <artifactId>mybatis-generator-maven-plugin</artifactId>
+    <version>1.3.5</version>
+    <configuration>
+        <verbose>true</verbose>
+        <overwrite>true</overwrite>
+    </configuration>
+</plugin>
+```
+
+### 第二步：generatorConfig.xml文件
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--导入属性配置，可以不用该文件，不用的话下面的某些属性就要硬编码到代码里-->
+    <properties resource="generator.properties"></properties>
+
+    <!--指定特定数据库的jdbc驱动jar包的位置，引用generator.properties
+    里的变量，下同-->
+    <classPathEntry location="${jdbc.driverLocation}"/>
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <!-- optional，旨在创建class时，对注释进行控制 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释，true-是，false-否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--jdbc的数据库连接 -->
+        <jdbcConnection
+                driverClass="${jdbc.driverClass}"
+                connectionURL="${jdbc.connectionURL}"
+                userId="${jdbc.userId}"
+                password="${jdbc.password}">
+        </jdbcConnection>
+
+
+        <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <!-- 把DECIMAL和NUMERIC强制转换为INTEGER，默认false -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类
+            targetPackage     指定生成的model生成所在的包名
+            targetProject     指定在该项目下所在的路径
+            酌情根据自己的项目结构要修改
+        -->
+        <javaModelGenerator targetPackage="com.XXX"
+                            targetProject="src/main/java">
+
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 
+        酌情根据自己的项目结构要修改-->
+        <sqlMapGenerator targetPackage="com.XXX"
+                         targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+                酌情根据自己的项目结构要修改
+        -->
+        <javaClientGenerator targetPackage="com.XXX"
+                             targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+<!--需要生成代码的表配置,前面四个字段比较重要，后面五个字段默认false就行了，暂时也不清楚什么意思，以后遇到在研究-->
+        <table  schema="数据库名，也可以不指定，因为前面配置的时候已经指定过了" tableName="数据表名" domainObjectName="代码中的表对应的实体类名" mapperName="XXDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+       
+    </context>
+</generatorConfiguration>
+```
+
+### 第三步：指定数据库generator.properties文件
+
+```
+jdbc.driverLocation=mysql-connector-java-5.1.46.jar 包的全路径，根据自己的实际情况配置
+# Oracle版：com/oracle/ojdbc7/版本号/ojdbc7-版本号.jar
+jdbc.driverClass=com.mysql.jdbc.Driver # oracle.jdbc.driver.OracleDriver
+jdbc.connectionURL=jdbc:mysql://IP地址:端口号/数据库名称?useSSL=false（useSSL字段在mysql5.5以后必须要加）
+# Oracle版：jdbc:oracle:thin:@IP地址:端口号:数据库名称
+jdbc.userId=用户名
+jdbc.password=密码
+```
+
+
+
 # 1、Oracle
 
 ## 1.1、batch-insert
 
 ```sql
-
 insert into login(id,name)
 (select sequence.nextval,a.* from(
 <foreach collection="list" item="item" index="index" close=")" open="(" separator="union all">
@@ -369,5 +493,138 @@ where (business_id,bussiness_type)
 in((100,1),(200,2),(300,3));
 
 经explain分析SQL，是会走索引的
+```
+
+# 3、常规建议
+
+## 3.1、有意义的null
+
+对比有含义的null值字符串或者数值，可以在代码中设置代码xml中null含义的特殊数值，
+
+比如字符串设置为"null"，数值指定为-999
+
+## 3.2、if标签
+
+### 数值
+
+#### 判空
+
+```xml
+不等于null
+<if test = "num != null">
+
+</if>
+```
+
+#### 范围查询
+
+```xml
+<if test = "num != null and num > 18">
+
+</if>
+或
+<if test = "num != null and num &gt; 18">
+
+</if>
+```
+
+##### 符号对应关系
+
+| 推荐写法 | 实际                                                 |
+| -------- | ---------------------------------------------------- |
+| &gt;     | >                                                    |
+| &gt;=    | >=                                                   |
+| &lt;     | <(会报错  相关联的 "test" 属性值不能包含 '<' 字符）  |
+| &lt;=    | <=(会报错  相关联的 "test" 属性值不能包含 '<' 字符） |
+
+
+
+### 字符串
+
+#### 判空
+
+```xml
+<if test = "str != null and '' != str">
+
+</if>
+
+或
+
+<if test = "str != null and '' neq str">
+
+</if>
+```
+
+#### 等值判断
+
+```xml
+<if test = "str != null and 'hello' != str">
+
+</if>
+
+或
+
+<if test = "str != null and 'hello' eq str">
+
+</if>
+
+
+<!-- 但是，对于非字符串类型的参数（如Boolean），就需要写成: -->
+<if test="flag != null and 'true'.toString() == flag.toString()">
+    flage=#{flag, jdbcType=BOOLEAN}
+</if>
+```
+
+#### 符号对应关系
+
+|      |      |
+| ---- | ---- |
+| eq   | ==   |
+| neq  | !=   |
+
+
+
+#### String的对应方法
+
+```xml
+<!-- 是否以什么开头 -->
+<if test="username != null and username.indexOf('ji') == 0">
+</if>
+<!-- 是否包含某字符 -->
+<if test="username != null and username.indexOf('ji') >= 0">
+</if>
+
+<!-- 是否以什么结尾 -->
+<if test="username != null and username.lastIndexOf('ji') > 0">
+</if>  
+```
+
+### 集合List
+
+#### 判空
+
+```xml
+<if test="userList != null and userList.isEmpty()">
+</if> 
+
+或
+
+<if test="userList != null and userList.size()>0">
+</if>
+```
+
+
+
+## 3.3、if-else同义替换
+
+```xml
+<choose>
+    <when test="">
+        //...
+    </when>
+    <otherwise>
+        //...
+    </otherwise>
+</choose>
 ```
 
