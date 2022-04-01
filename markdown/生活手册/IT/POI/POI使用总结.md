@@ -1,396 +1,498 @@
-一、 POI简介
-            Apache POI是Apache软件基金会的开放源码函式库，POI提供API给Java程序对Microsoft Office格式档案读和写的功能。
-二、 HSSF概况
+# 一、 POI简介
 
-HSSF 是Horrible SpreadSheet Format的缩写，通过HSSF，你可以用纯Java代码来读取、写入、修改Excel文件。HSSF 为读取操作提供了两类API：usermodel和eventusermodel，即“用户模型”和“事件-用户模型”。
+Apache POI是Apache软件基金会的开放源码函式库，POI提供API给Java程序对Microsoft Office格式档案读和写的功能。
 
-​       
+官网：https://poi.apache.org/components/spreadsheet/
 
-三、 POI EXCEL文档结构类
+版本对比
 
-            HSSFWorkbook excel文档对象
-    
-            HSSFSheet excel的sheet HSSFRow excel的行
-    
-            HSSFCell excel的单元格 HSSFFont excel字体
-    
-            HSSFName 名称 HSSFDataFormat 日期格式
-    
-            HSSFHeader sheet头
-    
-            HSSFFooter sheet尾
-    
-            HSSFCellStyle cell样式
-    
-            HSSFDateUtil 日期
-    
-            HSSFPrintSetup 打印
-    
-            HSSFErrorConstants 错误信息表
-四、 EXCEL常用操作方法
-  1、 得到Excel常用对象           
-[c-sharp] view plaincopy
+|               | POI版本         | Excel版本  | 拓展名 | 行数限制                                              |
+| ------------- | --------------- | ---------- | ------ | ----------------------------------------------------- |
+| HSSFWorkbook  |                 | 2003       | .xls   | 至多为65535行，超出会报错                             |
+| XSSFWorkbook  | POI 3.8版本开始 | 2007及以后 | .xlsx  | 1048576行，16384列，容易OOM内存溢出                   |
+| SXSSFWorkbook | POI 3.8版本开始 | 2007及以后 | .xlsx  | 无限制，硬盘空间换内存（就像HashMap用空间换时间一样） |
+
+对于不同版本的EXCEL文档要使用不同的工具类，如果使用错了，会提示如下错误信息。
 
 ```java
-POIFSFileSystem fs=newPOIFSFileSystem(new FileInputStream("d:/test.xls"));   
-//得到Excel工作簿对象   
-HSSFWorkbook wb = new HSSFWorkbook(fs);  
-//得到Excel工作表对象   
-HSSFSheet sheet = wb.getSheetAt(0);   
-//得到Excel工作表的行   
-HSSFRow row = sheet.getRow(i);  
-//得到Excel工作表指定行的单元格   
-HSSFCell cell = row.getCell((short) j);  
-cellStyle = cell.getCellStyle();//得到单元格样式  
+org.apache.poi.openxml4j.exceptions.InvalidOperationException
+org.apache.poi.poifs.filesystem.OfficeXmlFileException
 ```
 
- 2、建立Excel常用对象
-[c-sharp] view plaincopy
+引入相关依赖
 
-```java
-HSSFWorkbook wb = new HSSFWorkbook();//创建Excel工作簿对象  
-HSSFSheet sheet = wb.createSheet("new sheet");//创建Excel工作表对象    
-HSSFRow row = sheet.createRow((short)0); //创建Excel工作表的行  
-cellStyle = wb.createCellStyle();//创建单元格样式  
-row.createCell((short)0).setCellStyle(cellStyle); //创建Excel工作表指定行的单元格  
-row.createCell((short)0).setCellValue(1); //设置Excel工作表的值  
+```xml
+ <dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>4.1.2</version>
+ </dependency>
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>4.1.2</version>
+</dependency>
 ```
 
-3、设置sheet名称和单元格内容
-[c-sharp] view plaincopy
+
+
+# 二、 POI EXCEL文档结构类
+
+            XSSFWorkbook excel文档对象
+    
+            XSSFSheet excel的sheet XSSFRow excel的行
+    
+            XSSFCell excel的单元格 XSSFFont excel字体
+    
+            XSSFName 名称 XSSFDataFormat 日期格式
+    
+            XSSFHeader sheet头
+    
+            XSSFFooter sheet尾
+    
+            XSSFCellStyle cell样式
+    
+            XSSFDateUtil 日期
+    
+            XSSFPrintSetup 打印
+    
+            XSSFErrorConstants 错误信息表
+# 三、 EXCEL常用操作方法
+
+##   1、 得到Excel常用对象           
 
 ```java
-wb.setSheetName(1, "第一张工作表",HSSFCell.ENCODING_UTF_16);          
-cell.setEncoding((short) 1);      
-cell.setCellValue("单元格内容");  
+POIFSFileSystem fs= newPOIFSFileSystem(new FileInputStream("d:/test.xlsx"));
+// 得到Excel工作簿对象
+XSSFWorkbook wb = new XSSFWorkbook(fs);
+// 得到Excel工作表对象
+XSSFSheet sheet = wb.getSheetAt(0);
+// 得到Excel工作表的行
+XSSFRow row = sheet.getRow(i);
+// 得到Excel工作表指定行的单元格
+XSSFCell cell = row.getCell((short) j);
+// 得到单元格样式  
+cellStyle = cell.getCellStyle();
 ```
 
-4、取得sheet的数目 
-[c-sharp] view plaincopy
+
+
+##  2、建立Excel常用对象
 
 ```java
-wb.getNumberOfSheets()   
+// 创建Excel工作簿对象
+XSSFWorkbook wb = new XSSFWorkbook();
+// 创建Excel工作表对象
+XSSFSheet sheet = wb.createSheet("new sheet");
+// 创建Excel工作表的行
+XSSFRow row = sheet.createRow((short)0);
+// 创建单元格样式
+cellStyle = wb.createCellStyle();
+// 创建Excel工作表指定行的单元格
+row.createCell((short)0).setCellStyle(cellStyle);
+// 设置Excel工作表的值
+row.createCell((short)0).setCellValue(1);
 ```
 
-5、  根据index取得sheet对象
-[c-sharp] view plaincopy
+
+
+## 3、设置sheet名称和单元格内容
 
 ```java
-HSSFSheet sheet = wb.getSheetAt(0);  
+wb.setSheetName(1, "第一张工作表",XSSFCell.ENCODING_UTF_16);
+cell.setEncoding((short) 1);
+cell.setCellValue("单元格内容");
 ```
 
-6、取得有效的行数
-[c-sharp] view plaincopy
+
+
+## 4、取得sheet的数目 
 
 ```java
-int rowcount = sheet.getLastRowNum();  
+wb.getNumberOfSheets();
 ```
 
-7、取得一行的有效单元格个数
-[c-sharp] view plaincopy
+
+
+## 5、  根据index取得sheet对象
 
 ```java
-row.getLastCellNum();    
+XSSFSheet sheet = wb.getSheetAt(0);
 ```
 
-8、单元格值类型读写
 
-[c-sharp] view plaincopy
+
+## 6、取得有效的行数
 
 ```java
-cell.setCellType(HSSFCell.CELL_TYPE_STRING); //设置单元格为STRING类型  
-cell.getNumericCellValue();//读取为数值类型的单元格内容  
+int firstRowNum = sheet.getFirstRowNum();
+int rowCount = sheet.getLastRowNum();
+```
+
+
+
+## 7、取得一行的有效单元格个数
+
+```java
+row.getLastCellNum();
+```
+
+
+
+## 8、单元格值类型读写
+
+```java
+// 设置单元格为STRING类型
+cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+
+// 读取
+// 获取单元格类型
+int cellType = cell.getCellType();
+switch (cellType) {
+        // 数字
+        case Cell.CELL_TYPE_NUMERIC:
+            // 数值格式
+            short dataFormat = cell.getCellStyle().getDataFormat();
+            if (XSSFDateUtil.isCellDateFormatted(cell)) {
+                // 处理日期格式、时间格式
+                SimpleDateFormat sdf = null;
+                // 验证short值
+                if (dataFormat == 14) {
+                    sdf = new SimpleDateFormat("yyyy/MM/dd");
+                } else if (dataFormat == 21) {
+                    sdf = new SimpleDateFormat("HH:mm:ss");
+                } else if (dataFormat == 22) {
+                    sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                } else {
+                    throw new RuntimeException("日期格式错误!!!");
+                }
+                Date date = cell.getDateCellValue();
+                cellValue = sdf.format(date);
+            } else if (dataFormat == 0) {
+                // 处理数值格式
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+                cellValue = String.valueOf(cell.getRichStringCellValue().getString());
+            }
+            break;
+        // 字符串
+        case Cell.CELL_TYPE_STRING:
+            cellValue = String.valueOf(cell.getStringCellValue());
+            break;
+        // Boolean
+        case Cell.CELL_TYPE_BOOLEAN:
+            cellValue = String.valueOf(cell.getBooleanCellValue());
+            break;
+        // 公式
+        case Cell.CELL_TYPE_FORMULA:
+            cellValue = String.valueOf(cell.getCellFormula());
+            break;
+        // 空值
+        case Cell.CELL_TYPE_BLANK:
+            cellValue = null;
+            break;
+        // 故障 
+        case Cell.CELL_TYPE_ERROR:
+            cellValue = "非法字符";
+            break;
+        default:
+            cellValue = "未知类型";
+            break;
+    }
+// 读取为数值类型的单元格内容 
+cell.getNumericCellValue(); 
 ```
 
  
 
-
-9、设置列宽、行高
-
-[c-sharp] view plaincopy
+## 9、设置列宽、行高
 
 ```java
-sheet.setColumnWidth((short)column,(short)width);      
-row.setHeight((short)height);    
+sheet.setColumnWidth((short)column,(short)width);
+row.setHeight((short)height);
+```
+
+
+
+## 10、添加区域，合并单元格
+
+```java
+// 合并从第rowFrom行columnFrom列
+Region region = new Region((short)rowFrom,(short)columnFrom,(short)rowTo,(short)columnTo);
+// 到rowTo行columnTo的区域
+sheet.addMergedRegion(region);
+// 得到所有区域
+sheet.getNumMergedRegions();
 ```
 
  
 
-
-10、添加区域，合并单元格
-
-[c-sharp] view plaincopy
+## 11、保存Excel文件
 
 ```java
-Region region = new Region((short)rowFrom,(short)columnFrom,(short)rowTo  
-,(short)columnTo);//合并从第rowFrom行columnFrom列  
-sheet.addMergedRegion(region);// 到rowTo行columnTo的区域     
-//得到所有区域      
-sheet.getNumMergedRegions()   
+FileOutputStream fileOut = new FileOutputStream(path);
+wb.write(fileOut);
 ```
 
  
 
-
-11、保存Excel文件
-
-[c-sharp] view plaincopy
+## 12、根据单元格不同属性返回字符串数值
 
 ```java
-FileOutputStream fileOut = new FileOutputStream(path);   
-wb.write(fileOut);   
-```
-
- 
-
-
-12、根据单元格不同属性返回字符串数值
-
-[c-sharp] view plaincopy
-
-```java
-public String getCellStringValue(HSSFCell cell) {      
-        String cellValue = "";      
-        switch (cell.getCellType()) {      
-        case HSSFCell.CELL_TYPE_STRING://字符串类型  
-            cellValue = cell.getStringCellValue();      
-            if(cellValue.trim().equals("")||cellValue.trim().length()<=0)      
-                cellValue=" ";      
-            break;      
-        case HSSFCell.CELL_TYPE_NUMERIC: //数值类型  
-            cellValue = String.valueOf(cell.getNumericCellValue());      
-            break;      
-        case HSSFCell.CELL_TYPE_FORMULA: //公式  
-            cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);      
-            cellValue = String.valueOf(cell.getNumericCellValue());      
-            break;      
-        case HSSFCell.CELL_TYPE_BLANK:      
-            cellValue=" ";      
-            break;      
-        case HSSFCell.CELL_TYPE_BOOLEAN:      
-            break;      
-        case HSSFCell.CELL_TYPE_ERROR:      
-            break;      
-        default:      
-            break;      
-        }      
+public String getCellStringValue(XSSFCell cell) {
+        String cellValue = "";
+        // 获取单元格类型
+        int cellType = cell.getCellType();
+        switch (cellType) {
+            // 数字
+            case Cell.CELL_TYPE_NUMERIC:
+                // 数值格式
+                short dataFormat = cell.getCellStyle().getDataFormat();
+                if (XSSFDateUtil.isCellDateFormatted(cell)) {
+                    // 处理日期格式、时间格式
+                    SimpleDateFormat sdf = null;
+                    // 验证short值
+                    if (dataFormat == 14) {
+                        sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    } else if (dataFormat == 21) {
+                        sdf = new SimpleDateFormat("HH:mm:ss");
+                    } else if (dataFormat == 22) {
+                        sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    } else {
+                        throw new RuntimeException("日期格式错误!!!");
+                    }
+                    Date date = cell.getDateCellValue();
+                    cellValue = sdf.format(date);
+                } else if (dataFormat == 0) {
+                    // 处理数值格式
+                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    cellValue = String.valueOf(cell.getRichStringCellValue().getString());
+                }
+                break;
+            // 字符串
+            case Cell.CELL_TYPE_STRING:
+                cellValue = String.valueOf(cell.getStringCellValue());
+                break;
+            // Boolean
+            case Cell.CELL_TYPE_BOOLEAN:
+                cellValue = String.valueOf(cell.getBooleanCellValue());
+                break;
+            // 公式
+            case Cell.CELL_TYPE_FORMULA:
+                cellValue = String.valueOf(cell.getCellFormula());
+                break;
+            // 空值
+            case Cell.CELL_TYPE_BLANK:
+                cellValue = null;
+                break;
+            // 故障 
+            case Cell.CELL_TYPE_ERROR:
+                cellValue = "非法字符";
+                break;
+            default:
+                cellValue = "未知类型";
+                break;
+        }
         return cellValue;      
-    }     
+}
+
+
 ```
 
  
 
-
-13、常用单元格边框格式
-
-[c-sharp] view plaincopy
+## 13、常用单元格边框格式
 
 ```java
-HSSFCellStyle style = wb.createCellStyle();      
-style.setBorderBottom(HSSFCellStyle.BORDER_DOTTED);//下边框       
-style.setBorderLeft(HSSFCellStyle.BORDER_DOTTED);//左边框       
-style.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框       
-style.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+XSSFCellStyle style = wb.createCellStyle();
+// 下边框
+style.setBorderBottom(XSSFCellStyle.BORDER_DOTTED);
+// 左边框
+style.setBorderLeft(XSSFCellStyle.BORDER_DOTTED);
+// 右边框
+style.setBorderRight(XSSFCellStyle.BORDER_THIN);
+// 上边框
+style.setBorderTop(XSSFCellStyle.BORDER_THIN);
 ```
 
  
 
-
-14、设置字体和内容位置
-
-[c-sharp] view plaincopy
+## 14、设置字体和内容位置
 
 ```java
-HSSFFont f  = wb.createFont();      
-f.setFontHeightInPoints((short) 11);//字号      
-f.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);//加粗      
-style.setFont(f);      
-style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中      
-style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//上下居中      
-style.setRotation(short rotation);//单元格内容的旋转的角度      
-HSSFDataFormat df = wb.createDataFormat();      
-style1.setDataFormat(df.getFormat("0.00%"));//设置单元格数据格式      
-cell.setCellFormula(string);//给单元格设公式      
-style.setRotation(short rotation);//单元格内容的旋转的角度   
+XSSFFont f  = wb.createFont();
+// 字号
+f.setFontHeightInPoints((short) 11);
+// 加粗
+f.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
+style.setFont(f);
+// 左右居中
+style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+// 上下居中
+style.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+// 单元格内容的旋转的角度
+style.setRotation(short rotation);
+XSSFDataFormat df = wb.createDataFormat();
+// 设置单元格数据格式
+style1.setDataFormat(df.getFormat("0.00%"));
+// 给单元格设公式
+cell.setCellFormula(string);
+// 单元格内容的旋转的角度
+style.setRotation(short rotation);
 ```
 
  
 
-
-15、插入图片
-
-[c-sharp] view plaincopy
+## 15、插入图片
 
 ```java
-//先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray      
-      ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();      
-      BufferedImage bufferImg = ImageIO.read(new File("ok.jpg"));      
-      ImageIO.write(bufferImg,"jpg",byteArrayOut);      
-//读进一个excel模版      
-FileInputStream fos = new FileInputStream(filePathName+"/stencil.xlt");       
-fs = new POIFSFileSystem(fos);      
-//创建一个工作薄      
-HSSFWorkbook wb = new HSSFWorkbook(fs);      
-HSSFSheet sheet = wb.getSheetAt(0);      
-HSSFPatriarch patriarch = sheet.createDrawingPatriarch();      
-HSSFClientAnchor anchor = new HSSFClientAnchor(0,0,1023,255,(short) 0,0,(short)10,10);           
-patriarch.createPicture(anchor , wb.addPicture(byteArrayOut.toByteArray(),HSSFWorkbook.PICTURE_TYPE_JPEG));    
+// 先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
+ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+BufferedImage bufferImg = ImageIO.read(new File("ok.jpg"));
+ImageIO.write(bufferImg,"jpg",byteArrayOut);
+// 读进一个excel模版
+FileInputStream fos = new FileInputStream(filePathName+"/stencil.xlt");
+fs = new POIFSFileSystem(fos);
+// 创建一个工作薄
+XSSFWorkbook wb = new XSSFWorkbook(fs);      
+XSSFSheet sheet = wb.getSheetAt(0);
+XSSFPatriarch patriarch = sheet.createDrawingPatriarch();
+XSSFClientAnchor anchor = new XSSFClientAnchor(0,0,1023,255,(short) 0,0,(short)10,10);
+patriarch.createPicture(anchor , wb.addPicture(byteArrayOut.toByteArray(),XSSFWorkbook.PICTURE_TYPE_JPEG));
 ```
 
  
 
-
-16、调整工作表位置
-
-[c-sharp] view plaincopy
+## 16、调整工作表位置
 
 ```java
-HSSFWorkbook wb = new HSSFWorkbook();     
-HSSFSheet sheet = wb.createSheet("format sheet");     
-HSSFPrintSetup ps = sheet.getPrintSetup();     
-sheet.setAutobreaks(true);     
-ps.setFitHeight((short)1);     
-ps.setFitWidth((short)1);   
+XSSFWorkbook wb = new XSSFWorkbook();
+XSSFSheet sheet = wb.createSheet("format sheet");
+XSSFPrintSetup ps = sheet.getPrintSetup();
+sheet.setAutobreaks(true);
+ps.setFitHeight((short)1);
+ps.setFitWidth((short)1);
 ```
 
   
 
 
 
-
-17、设置打印区域
-
-[c-sharp] view plaincopy
+## 17、设置打印区域
 
 ```java
-HSSFSheet sheet = wb.createSheet("Sheet1");     
-wb.setPrintArea(0, "$A$1:$C$2");    
+XSSFSheet sheet = wb.createSheet("Sheet1");
+wb.setPrintArea(0, "$A$1:$C$2");
 ```
 
  
 
-
-18、标注脚注
-
-[c-sharp] view plaincopy
+## 18、标注脚注
 
 ```java
-HSSFSheet sheet = wb.createSheet("format sheet");     
-HSSFFooter footer = sheet.getFooter()     
-footer.setRight( "Page " + HSSFFooter.page() + " of " + HSSFFooter.numPages() );   
+XSSFSheet sheet = wb.createSheet("format sheet");
+XSSFFooter footer = sheet.getFooter();
+footer.setRight( "Page " + XSSFFooter.page() + " of " + XSSFFooter.numPages() );
 ```
 
  
 
-
-19、在工作单中清空行数据，调整行位置
-
-[c-sharp] view plaincopy
+## 19、在工作单中清空行数据，调整行位置
 
 ```java
-HSSFWorkbook wb = new HSSFWorkbook();     
-HSSFSheet sheet = wb.createSheet("row sheet");     
-// Create various cells and rows for spreadsheet.     
-// Shift rows 6 - 11 on the spreadsheet to the top (rows 0 - 5)     
-sheet.shiftRows(5, 10, -5);    
+XSSFWorkbook wb = new XSSFWorkbook();
+XSSFSheet sheet = wb.createSheet("row sheet");
+// Create various cells and rows for spreadsheet.
+// Shift rows 6 - 11 on the spreadsheet to the top (rows 0 - 5)
+sheet.shiftRows(5, 10, -5);
 ```
 
  
 
-
-20、选中指定的工作表
-
-[c-sharp] view plaincopy
+## 20、选中指定的工作表
 
 ```java
-HSSFSheet sheet = wb.createSheet("row sheet");     
-heet.setSelected(true);     
+XSSFSheet sheet = wb.createSheet("row sheet");
+heet.setSelected(true);
 ```
 
  
 
+## 21、工作表的放大缩小
 
-21、工作表的放大缩小
-
-
-[c-sharp] view plaincopy
 
 ```java
-HSSFSheet sheet1 = wb.createSheet("new sheet");     
-sheet1.setZoom(1,2);   // 50 percent magnification    
+XSSFSheet sheet1 = wb.createSheet("new sheet");
+// 50 percent magnification
+sheet1.setZoom(1,2);
 ```
 
  
 
-
-22、头注和脚注
-
-[c-sharp] view plaincopy
+## 22、头注和脚注
 
 ```java
-HSSFSheet sheet = wb.createSheet("new sheet");     
-HSSFHeader header = sheet.getHeader();     
-header.setCenter("Center Header");     
-header.setLeft("Left Header");     
-header.setRight(HSSFHeader.font("Stencil-Normal", "Italic") +     
-HSSFHeader.fontSize((short) 16) + "Right w/ Stencil-Normal Italic font and size 16");  
+XSSFSheet sheet = wb.createSheet("new sheet");
+XSSFHeader header = sheet.getHeader();
+header.setCenter("Center Header");
+header.setLeft("Left Header");
+header.setRight(XSSFHeader.font("Stencil-Normal", "Italic") +
+XSSFHeader.fontSize((short) 16) + "Right w/ Stencil-Normal Italic font and size 16");
 ```
 
  
 
-
-23、自定义颜色
-
-[c-sharp] view plaincopy
+## 23、自定义颜色
 
 ```java
-HSSFCellStyle style = wb.createCellStyle();     
-style.setFillForegroundColor(HSSFColor.LIME.index);     
-style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);     
-HSSFFont font = wb.createFont();     
-font.setColor(HSSFColor.RED.index);     
-style.setFont(font);     
-cell.setCellStyle(style);     
+XSSFCellStyle style = wb.createCellStyle();
+style.setFillForegroundColor(XSSFColor.LIME.index);
+style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+XSSFFont font = wb.createFont();
+font.setColor(XSSFColor.RED.index);
+style.setFont(font);
+cell.setCellStyle(style);
 ```
 
-24、填充和颜色设置
 
-[c-sharp] view plaincopy
+
+## 24、填充和颜色设置
 
 ```java
-HSSFCellStyle style = wb.createCellStyle();     
-style.setFillBackgroundColor(HSSFColor.AQUA.index);     
-style.setFillPattern(HSSFCellStyle.BIG_SPOTS);     
-HSSFCell cell = row.createCell((short) 1);     
-cell.setCellValue("X");     
-style = wb.createCellStyle();     
-style.setFillForegroundColor(HSSFColor.ORANGE.index);     
-style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);     
-cell.setCellStyle(style);   
+XSSFCellStyle style = wb.createCellStyle();
+style.setFillBackgroundColor(XSSFColor.AQUA.index);
+style.setFillPattern(XSSFCellStyle.BIG_SPOTS);
+XSSFCell cell = row.createCell((short) 1);
+cell.setCellValue("X");
+style = wb.createCellStyle();
+style.setFillForegroundColor(XSSFColor.ORANGE.index);
+style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+cell.setCellStyle(style);
+
+// 复制格式
+XSSFCellStyle cellStyle2 = workBook.createCellStyle();
+cellStyle2.cloneStyleFrom(style);
 ```
 
-25、强行刷新单元格公式
 
-[c-sharp] view plaincopy
+
+## 25、强行刷新单元格公式
 
 ```java
-HSSFFormulaEvaluator eval=new HSSFFormulaEvaluator((HSSFWorkbook) wb);    
-private static void updateFormula(Workbook wb,Sheet s,int row){     
-        Row r=s.getRow(row);     
-        Cell c=null;     
-        FormulaEcaluator eval=null;     
-        if(wb instanceof HSSFWorkbook)     
-            eval=new HSSFFormulaEvaluator((HSSFWorkbook) wb);     
-        else if(wb instanceof XSSFWorkbook)     
-            eval=new XSSFFormulaEvaluator((XSSFWorkbook) wb);     
-        for(int i=r.getFirstCellNum();i<r.getLastCellNum();i++){     
-            c=r.getCell(i);     
-            if(c.getCellType()==Cell.CELL_TYPE_FORMULA)     
-                eval.evaluateFormulaCell(c);     
-        }     
-    }    
+XSSFFormulaEvaluator eval=new XSSFFormulaEvaluator((XSSFWorkbook) wb);
+private static void updateFormula(Workbook wb,Sheet s,int row){
+        Row r=s.getRow(row);
+        Cell c=null;
+        FormulaEcaluator eval=null;
+        if(wb instanceof XSSFWorkbook)
+            eval=new XSSFFormulaEvaluator((XSSFWorkbook) wb);
+        else if(wb instanceof XSSFWorkbook)
+            eval=new XSSFFormulaEvaluator((XSSFWorkbook) wb);
+        for(int i=r.getFirstCellNum();i<r.getLastCellNum();i++){
+            c=r.getCell(i);
+            if(c.getCellType()==Cell.CELL_TYPE_FORMULA)
+                eval.evaluateFormulaCell(c);
+        }
+    }
 ```
 
-说明：FormulaEvaluator提供了evaluateFormulaCell(Cell cell)方法，计算公式保存结果，但不改变公式。而evaluateInCell(Cell cell) 方法是计算公式，并将原公式替换为计算结果，也就是说该单元格的类型不在是Cell.CELL_TYPE_FORMULA而是Cell.CELL_TYPE_NUMBERIC。HSSFFormulaEvaluator提供了静态方法evaluateAllFormu
-
-laCells(HSSFWorkbook wb) ，计算一个Excel文件的所有公式，用起来很方便。
+说明：FormulaEvaluator提供了evaluateFormulaCell(Cell cell)方法，计算公式保存结果，但不改变公式。而evaluateInCell(Cell cell) 方法是计算公式，并将原公式替换为计算结果，也就是说该单元格的类型不在是Cell.CELL_TYPE_FORMULA而是Cell.CELL_TYPE_NUMBERIC。XSSFFormulaEvaluator提供了静态方法evaluateAllFormulaCells(XSSFWorkbook wb) ，计算一个Excel文件的所有公式，用起来很方便。
