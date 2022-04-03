@@ -40,13 +40,17 @@ File—>Settings—>Build，Execution，Development—>complier—>build project
 
 ### 自动优化导入
 
-保存文件时
+File—>Settings—>General—>Auto Import—>Optimize imports onthe fly打勾
+
+手动优化导入的类，可以对当前文件和整个包目录使用  Ctrl+Alt+O  Control+Option+O
+
+#### 保存文件时
 
 File—>Settings—>Tools—>Actions on Save—>Optimize imports打勾 
 
-tips：手动优化导入快捷键，Win：Ctrl+Shift+O，Mac：Command+Option+O
+tips：手动优化导入快捷键，Win：Ctrl+Shift+O，Control+Option+O
 
-git commit时
+#### git commit时
 
 File—>Settings—>Version Control—>Commit—>Optimize imports打勾 
 
