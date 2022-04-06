@@ -78,6 +78,11 @@ generate ·grep -rl “aaa” * | grep -v “bbb”·
 
 ### df -hl
 
+```
+-l:限制只列出本地文件系统
+-h:便于人类观看的形式，如以MB为单位
+```
+
 
 
 ## 2.2、**du**
@@ -428,12 +433,14 @@ stdio: /usr/include/stdio.h /usr/share/man/man3/stdio.3.gz
 ## 5.1、 查看cpu硬件配置
 
 ```
-less /proc/cpuinfo 
+less /proc/cpuinfo		查看cpu信息
 
 uname -a                查看内核/操作系统/CPU信息
 head -n 1 /etc/issue    查看操作系统版本
 less /proc/cpuinfo      查看CPU信息
 hostname                查看计算机名
+
+less /proc/swaps		查看SWAP分区信息
 ```
 
 ## 5.2、 top  命令
