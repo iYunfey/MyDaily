@@ -181,7 +181,7 @@ File—>Appearance & Behavior—>Quick Lists—>+—>添加快捷菜单—>KeyMa
 
 | 描述                                                         | Windows           | Mac Os      |
 | ------------------------------------------------------------ | ----------------- | ----------- |
-| 进入光标所在的方法/变量的接口/定义处 Ctrl+鼠标左击           | Ctrl+B            |             |
+| 进入光标所在的方法/变量的接口/定义处 Ctrl+鼠标左击           | Ctrl+B            | Command+B   |
 | 跳转到类型声明处                                             | Ctrl+Shift+B      |             |
 | 在某个调用的方法名上使用会跳转到具体的实现处，可以跳过接口   | Ctrl+Alt+B        |             |
 | 快速查看光标所在的方法/类的定义                              | Ctrl+Shift+I      |             |
@@ -190,8 +190,8 @@ File—>Appearance & Behavior—>Quick Lists—>+—>添加快捷菜单—>KeyMa
 | 弹出框查询所有使用的地方                                     | Ctrl+Shift+Alt+F7 |             |
 | 跳转到下一个 高亮错误 / 警告位置                             | F2                |             |
 | 跳转到上一个高亮错误 / 警告位置                              | Shift+F2          |             |
-| 方法参数提示显示                                             | Ctrl+P            | Command  +P |
-| 光标所在的变量/类名/方法名等上面（也可以在提示补充的时候按），显示文档内容 | Ctrl+Q            |             |
+| 方法参数提示显示                                             | Ctrl+P            | Command+P   |
+| 光标所在的变量/类名/方法名等上面(也可以在提示补充的时候按)，显示文档内容 | Ctrl+Q            |             |
 | 前往当前光标所在的方法的父类的方法/接口定义                  | Ctrl+U            |             |
 | 显示当前类的层次结构                                         | Ctrl+H            |             |
 | 调用层次                                                     | Ctrl+Alt+H        |             |
@@ -255,7 +255,7 @@ File—>Appearance & Behavior—>Quick Lists—>+—>添加快捷菜单—>KeyMa
 | 跳到文件尾                                                   | Ctrl+c         | Command+↓        |
 | 选中光标到当前行头位置                                       | Shift+Home     | Command+←        |
 | 选中光标到当前行尾位置                                       | Shift+End      | Command+→        |
-| 开始新一行。光标所在行下空出一行，光标定位到新行位置         | Shift+Enter    | Shift+Enter      |
+| 开始新一行。<br />光标所在行下空出一行，光标定位到新行位置   | Shift+Enter    | Shift+Enter      |
 | 退回到上一个操作的地方                                       | Ctrl+Alt+←     | Option+Command+← |
 | 前往到下一个操作的地方                                       | Ctrl+Alt+→     | Option+Command+→ |
 | 移动光标到当前所在代码的花括号开始位置                       | Ctrl+[         |                  |
@@ -357,18 +357,22 @@ File—>Appearance & Behavior—>Quick Lists—>+—>添加快捷菜单—>KeyMa
 | 生成main方法           | psvm/main | psvm/main |
 | 生成静态int成员变量    | psfi      | psfi      |
 | 生成静态string成员变量 | psfs      | psfs      |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
-|                        |           |           |
 
 # 四、插件
 
-Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeGlance
+Lombok：注解
+
+Key promoterX：快捷键提示
+
+Json Parser：Json格式化
+
+Free Mybatis plugin：
+
+Translation：在线翻译
+
+CodeGlance：代码缩略
+
+SequenceDiagram：时序图
 
 # 五、启动项目
 
@@ -398,22 +402,77 @@ Lombok，Key promoterX，Json Parser，Free Mybatis plugin，Translation，CodeG
 
 蓝色背景 的行就是当前程序停顿的行
 
-step over（F8），执行到当前方法的下一行，步过
+### 步过
 
-step into（F7），进入当前行调用的方法体，步过
+#### 逐行步过
 
-step out（shift+F8），执行完当前的方法，步过
+Step Over(F8)，执行到当前方法的下一行
 
-force step into（alt+shift+F7），可以进入第三方jar包或者jdk自带方法内部
+#### 方法步过
 
-Alt+Shift+F8，强制步过
+Step Out(shift+F8)，执行完当前的方法
 
-Alt+F9，运行至光标处
+#### 强制步过
+
+Force Step Out(Alt+Shift+F8)
+
+### 步入
+
+#### 普通步入
+
+Step Into(F7)，进入当前行调用的方法体
+
+#### 智能步入
+
+Smart Step Into(shift+F7)，如果有多个方法需要选择待进入的方法，如果只有一个方法就直接进入
+
+#### 强制步入
+
+Force Step Into(alt+shift+F7)，可以进入第三方jar包或者jdk自带方法内部
+
+### 跳转
+
+#### 普通跳转
+
+F9，跳转到下一个可执行断点
+
+#### 定位跳转
+
+Run to Cursor(Alt+F9)，运行至光标处
+
+#### 强制跳转
+
 Ctrl+Alt+F9，强制运行至光标处
+
+### 结束
+
+debug窗口step out右边Force Return，即强制返回来避免后续的流程
+
+### 回退
+
+方式一：debug窗口step out右边drop frame可以回溯到上个方法内
+
+方式二：在Debug控制台—>Debugger—>Frames的下拉列表的调⽤栈⽅法上选择要回退的⽅法，右键选择Drop Frame
+
+### 其它
+
+#### 查看变量属性
 
 鼠标悬停在变量上，变量下方灰色阴影点击展开即可查看变量属性
 
-debug窗口step out右边drop frame可以回溯到上个方法内
+#### 多线程调试
+
+因为IDEA在Debug时默认阻塞级别是ALL，会阻塞其它线程，只有在当前调试线程走完时才会走其它线程。可以在View Breakpoints(Ctrl+Shift+F8，也可以在导航栏Run寻找)里，Suspend由All改为Thread，然后点击Make Default设置为默认选项。
+
+在Debug控制台—>Debugger—>Frames的下拉列表⾥，可以切换当前的线程。
+
+#### 计算表达式
+
+Evaluate Expression (Alt + F8) ，可以使⽤这个操作在调试过程中计算某个表达式的值
+
+1、可以选中某个表达式再Alt + F8，弹出计算表达式的窗口，可以设置返回值断点
+
+2、可以修改指定变量的值，很⽅便我们去调试之后代码各种值的情况。
 
 
 
@@ -425,13 +484,13 @@ view breakpoints 可以管理所有断点及其属性
 
 mute breakpoints取消所有断点
 
-### 条件断点（问号）
+### 条件断点(问号)
 
 循环条件断点：当循环到第几次的时候停止，在相应断点属性condition内填写Java代码条件i == 2，这样断点右下角有个问号，表明是条件断点
 
 期望条件断点：当某个属性值等于期望值时停止
 
-### 异常断点（闪电）
+### 异常断点(闪电)
 
 在view breakpoints界面，点+号新增Java Exception Breakpoints，写一个异常。闪电标识
 
@@ -628,7 +687,7 @@ Repository name就是仓库名。Remote就是远程仓库名。origin这是Git�
 
 ![](./pics/add_remote_8.png)
 
-### 克隆（clone）项目
+### 克隆(clone)项目
 
 第一步：
 先找到需要克隆的项目的链接，如图所示
@@ -667,9 +726,9 @@ Git支持多种协议，默认的git://使用ssh，但也可以使用https等其
 
 ### add+commit
 
-将一个文件创建并存放到Git的本地仓库的动作叫做提交（commit）。其分为三步，第一步自然是创建文件，第二步是将文件添加
+将一个文件创建并存放到Git的本地仓库的动作叫做提交(commit)。其分为三步，第一步自然是创建文件，第二步是将文件添加
 
-（add）到暂存区，然后再commit到本地仓库。
+(add)到暂存区，然后再commit到本地仓库。
 
 第一步：创建文件，自动add
 
@@ -683,11 +742,11 @@ Git支持多种协议，默认的git://使用ssh，但也可以使用https等其
 
 第二步：commit
 
-快捷键Ctrl+K，或者点击编辑器右上角的绿色小对勾（也可能在左上角）。
+快捷键Ctrl+K，或者点击编辑器右上角的绿色小对勾(也可能在左上角)。
 
 ![](./pics/commit_1.png)
 
-弹出的对话框就是使用`git status`指令查看是否有内容被修改的可视化界面，如下（vcs.xml是idea的初始化文件，请无视）
+弹出的对话框就是使用`git status`指令查看是否有内容被修改的可视化界面，如下(vcs.xml是idea的初始化文件，请无视)
 
 ![](./pics/commit_2.png)
 
@@ -869,7 +928,7 @@ IDEA在创建完分支后会自动切换，也就是`git checkout -b dev`指令�
 
 ### 合并分支
 
-合并分支（merge）也非常简单，首先我们切换到主分支，操作如下：
+合并分支(merge)也非常简单，首先我们切换到主分支，操作如下：
 
 ![](./pics/git_merge_1.png)
 
@@ -919,7 +978,7 @@ Creating a new branch is quick & simple.
 
 ![](./pics/git_resolve_confict_4.png)
 
-### Bug 分支（stash+cherry-pick）
+### Bug 分支(stash+cherry-pick)
 
 有这样一个场景，当你接到一个修复一个代号101的bug的任务时，很自然地，你想创建一个分支issue-101来修复它，但是，等等，当前
 
@@ -1021,7 +1080,7 @@ project效果一样。
 
 ![](./pics/git_rebase_1.png)
 
-而我们使用变基（rebase）就可以避免这一情况。在update project的时候选择下面的选项。
+而我们使用变基(rebase)就可以避免这一情况。在update project的时候选择下面的选项。
 
 ![](./pics/git_rebase_2.png)
 
