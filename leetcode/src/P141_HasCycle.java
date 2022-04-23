@@ -10,6 +10,7 @@ public class P141_HasCycle {
         public boolean hasCycle(ListNode head) {
             Set<ListNode> set = new HashSet<ListNode>();
             while (head != null) {
+                // 重复元素返回false
                 if (!set.add(head)) {
                     return true;
                 }
