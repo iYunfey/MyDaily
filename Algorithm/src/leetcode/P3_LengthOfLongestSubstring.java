@@ -35,6 +35,7 @@ public class P3_LengthOfLongestSubstring {
             int maxLen = 0;//用于记录最大不重复子串的长度
             int left = 0;//滑动窗口左指针
             for (int right = 0; right < s.length(); right++) {
+                char c = s.charAt(right);
                 /**
                  1、首先，判断当前字符是否包含在map中，如果不包含，将该字符添加到map（字符，字符在数组下标）,
                  此时没有出现重复的字符，左指针不需要变化。此时不重复子串的长度为：right-left+1，与原来的maxLen比较，取最大值；
@@ -51,10 +52,10 @@ public class P3_LengthOfLongestSubstring {
                  另外，更新left后，不管原来的 s.charAt(right) 是否在最长子段中，我们都要将 s.charAt(right) 的位置更新为当前的i，
                  因此此时新的 s.charAt(right) 已经进入到 当前最长的子段中！
                  */
-                if (map.containsKey(s.charAt(right))) {
-                    left = Math.max(left, map.get(s.charAt(right)) + 1);
+                if (map.containsKey(c)) {
+                    left = Math.max(left, map.get(c) + 1);
                 }
-                //不管是否更新left，都要更新 s.charAt(right) 的位置！
+                //不管是否更新left，都要更新 c = s.charAt(right) 的位置！
                 map.put(s.charAt(right), right);
                 maxLen = Math.max(maxLen, right - left + 1);
             }
