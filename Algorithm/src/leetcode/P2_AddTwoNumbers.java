@@ -44,7 +44,6 @@ public class P2_AddTwoNumbers {
                 temp.next = new ListNode(carry);
             }
             return dumy.next;
-
         }
     }
 }
