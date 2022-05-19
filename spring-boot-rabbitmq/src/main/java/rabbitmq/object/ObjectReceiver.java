@@ -1,9 +1,9 @@
 package rabbitmq.object;
 
-import com.iyunfey.springboot.rabbitmq.domain.User;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import rabbitmq.domain.User;
 
 @Component
 @RabbitListener(queues = "object")

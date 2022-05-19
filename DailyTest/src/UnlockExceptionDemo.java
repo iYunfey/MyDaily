@@ -9,7 +9,6 @@
  * 作者姓名 修改时间 版本号 描述
  */
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**

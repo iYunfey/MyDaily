@@ -1,9 +1,9 @@
 package rabbitmq.object;
 
-import com.iyunfey.springboot.rabbitmq.domain.User;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rabbitmq.domain.User;
 
 @Component
 public class ObjectSender {
