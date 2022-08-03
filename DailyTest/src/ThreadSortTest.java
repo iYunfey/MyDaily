@@ -1,6 +1,8 @@
 public class ThreadSortTest {
 
     public static void main(String[] args) throws InterruptedException {
+        System.out.println("main-start");
+
         Thread thread1 = new Thread(() -> {
             System.out.println("thread1");
         });
@@ -22,5 +24,6 @@ public class ThreadSortTest {
         System.out.println("3333333333333333-start");
         thread3.join();
         System.out.println("3333333333333333-end");
+        System.out.println("main-end");
     }
 }
