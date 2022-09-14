@@ -30,7 +30,7 @@ public class LFUCache<K, V> {
         if (!concurrentHashMap.containsKey(key)) return null;
         Cache cache = concurrentHashMap.get(key);
         if (cache == null) return null;
-        cache.setHitCount(cache.getHitCount()+1);
+        cache.setHitCount(cache.getHitCount() + 1);
         cache.setAccessTime(System.currentTimeMillis());
         return cache.getValue();
     }
@@ -41,13 +41,13 @@ public class LFUCache<K, V> {
      * @param key
      * @param value
      */
-    public void put(K key, V value,long expire) {
+    public void put(K key, V value, long expire) {
         checkNotNull(key);
         checkNotNull(value);
         // 当缓存存在时，更新缓存
-        if (concurrentHashMap.containsKey(key)){
+        if (concurrentHashMap.containsKey(key)) {
             Cache cache = concurrentHashMap.get(key);
-            cache.setHitCount(cache.getHitCount()+1);
+            cache.setHitCount(cache.getHitCount() + 1);
             cache.setWriteTime(System.currentTimeMillis());
             cache.setAccessTime(System.currentTimeMillis());
             cache.setExpireTime(expire);
@@ -57,10 +57,10 @@ public class LFUCache<K, V> {
         // 已经达到最大缓存
         if (isFull()) {
             Object kickedKey = getKickedKey();
-            if (kickedKey !=null){
+            if (kickedKey != null) {
                 // 移除最少使用的缓存
                 concurrentHashMap.remove(kickedKey);
-            }else {
+            } else {
                 return;
             }
         }
@@ -99,14 +99,13 @@ public class LFUCache<K, V> {
 
     /**
      * 获取最少使用的缓存
+     *
      * @return
      */
     private Object getKickedKey() {
         Cache min = Collections.min(concurrentHashMap.values());
         return min.getKey();
     }
-
-
 
 
     /**

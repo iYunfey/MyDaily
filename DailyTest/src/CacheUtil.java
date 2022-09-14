@@ -93,7 +93,7 @@ public class CacheUtil {
      */
     public static boolean put(Map<String, Object> m, int time_out) {
         if (map.size() + m.size() <= MAX_CAPACITY) {
-            map.putAll(map);
+            map.putAll(m);
             for (String key : m.keySet()) {
                 timer.schedule(new ClearTask(key), time_out * SECOND_TIME);
             }
